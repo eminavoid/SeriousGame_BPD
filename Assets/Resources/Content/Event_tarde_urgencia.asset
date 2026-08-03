@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c99425dbfc4ef4094c05d7a0f84233, type: 3}
+  m_Name: Event_tarde_urgencia
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.DayEvent
+  eventId: tarde_urgencia
+  block: 2
+  title: "Tarde \u2014 La urgencia en el pecho"
+  body: "Est\xE1s solo/a. Una ola sube sin una causa clara: ira, tristeza, vac\xEDo.
+    Quer\xE9s hacer algo YA para que pare \u2014cualquier cosa. El cuerpo pide alivio
+    inmediato."
+  tags: 050000000200000003000000
+  enterDelta:
+    affect: -35
+    impulsivity: 40
+    clarity: -25
+  options:
+  - optionId: act_out
+    label: Actuar el impulso (gritar, romper algo chico, mandar un mensaje hiriente)
+    delta:
+      affect: -10
+      impulsivity: -5
+      clarity: -30
+    requiresSkillOffer: 1
+    suggestedSkill: 2
+    outcomeWithoutSkill: "Hay un segundo de descarga\u2026 y despu\xE9s m\xE1s culpa
+      y m\xE1s soledad."
+    outcomeWithSkill: "TIPP: agua fr\xEDa en la cara, 20 sentadillas, respirar m\xE1s
+      lento. La ola sigue ah\xED, pero ya no te arrastra igual."
+    skillBonusDelta:
+      affect: 25
+      impulsivity: -35
+      clarity: 20
+  - optionId: ride_wave
+    label: 'Surfear la ola: cronometrar 10 minutos sin decidir nada grande'
+    delta:
+      affect: 5
+      impulsivity: -15
+      clarity: 10
+    requiresSkillOffer: 1
+    suggestedSkill: 1
+    outcomeWithoutSkill: "Diez minutos duelen. La urgencia baja un poco sola. Aprend\xE9s:
+      las olas pasan."
+    outcomeWithSkill: "STOP te da permiso a no decidir en el pico. Observ\xE1s la
+      emoci\xF3n como clima, no como verdad absoluta."
+    skillBonusDelta:
+      affect: 10
+      impulsivity: -20
+      clarity: 18
+  recommendedSkill: 2

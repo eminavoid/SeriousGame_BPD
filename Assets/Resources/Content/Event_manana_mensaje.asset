@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c99425dbfc4ef4094c05d7a0f84233, type: 3}
+  m_Name: Event_manana_mensaje
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.DayEvent
+  eventId: manana_mensaje
+  block: 0
+  title: "Ma\xF1ana \u2014 Tres puntitos\u2026 y silencio"
+  body: "Le escribiste a alguien importante. Vio el mensaje. Empez\xF3 a escribir.
+    Dej\xF3 de escribir. Pasaron veinte minutos. Tu pecho late como si fuera una
+    emergencia."
+  tags: 0000000004000000
+  enterDelta:
+    affect: -25
+    impulsivity: 30
+    clarity: -15
+  options:
+  - optionId: spam
+    label: "Mandar varios mensajes seguidos ('\xBFest\xE1s enojado/a conmigo?')"
+    delta:
+      affect: -15
+      impulsivity: 20
+      clarity: -20
+    requiresSkillOffer: 1
+    suggestedSkill: 2
+    outcomeWithoutSkill: "La urgencia habla por vos. Despu\xE9s llega la verg\xFCenza.
+      La otra persona responde tarde: estaba en una reuni\xF3n."
+    outcomeWithSkill: "Us\xE1s TIPP un minuto: respir\xE1s, solt\xE1s hombros. Esper\xE1s.
+      Cuando responde, el alivio es real \u2014y no tuviste que incendiar el chat."
+    skillBonusDelta:
+      affect: 15
+      impulsivity: -25
+      clarity: 15
+  - optionId: wait
+    label: Esperar y distraerte un rato (aunque cueste)
+    delta:
+      affect: 5
+      impulsivity: -10
+      clarity: 8
+    requiresSkillOffer: 0
+    suggestedSkill: 0
+    outcomeWithoutSkill: 'Cuesta. El cuerpo sigue en alarma. Pero el silencio no
+      era abandono: era la vida del otro.'
+    outcomeWithSkill: 
+    skillBonusDelta:
+      affect: 0
+      impulsivity: 0
+      clarity: 0
+  recommendedSkill: 2

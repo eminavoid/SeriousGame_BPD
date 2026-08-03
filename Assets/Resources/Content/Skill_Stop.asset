@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b7b07ecda71f24f954801fccf6c351, type: 3}
+  m_Name: Skill_Stop
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.SkillDef
+  id: 1
+  displayName: STOP
+  shortDescription: Frenar el impulso antes de actuar.
+  howToUse: "Stop (par\xE9) \u2192 Take a step back (darte un paso atr\xE1s) \u2192
+    Observe (observ\xE1) \u2192 Proceed mindfully (segu\xED con m\xE1s claridad)."
+  successDelta:
+    affect: 0
+    impulsivity: -20
+    clarity: 15

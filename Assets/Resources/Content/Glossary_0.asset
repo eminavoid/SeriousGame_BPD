@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1271d4722d37c454e84c2b27f8d22ff3, type: 3}
+  m_Name: Glossary_0
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.GlossaryEntry
+  title: "\xBFQu\xE9 es el TLP?"
+  body: "El Trastorno L\xEDmite de la Personalidad (TLP o BPD) implica emociones
+    muy intensas, miedo fuerte al abandono, relaciones que oscilan, y a veces una
+    sensaci\xF3n inestable de qui\xE9n soy. No es 'drama' ni manipulaci\xF3n: es
+    un patr\xF3n de sufrimiento real. Muchas personas mejoran con apoyo y habilidades."
+  relatedTag: 5

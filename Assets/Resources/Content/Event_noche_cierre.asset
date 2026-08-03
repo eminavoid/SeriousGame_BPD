@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c99425dbfc4ef4094c05d7a0f84233, type: 3}
+  m_Name: Event_noche_cierre
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.DayEvent
+  eventId: noche_cierre
+  block: 3
+  title: "Noche \u2014 Revisar el d\xEDa"
+  body: "La casa est\xE1 quieta. Repas\xE1s lo que pas\xF3. Algunas cosas duelen.
+    Otras las manejaste mejor de lo que cre\xEDas. Ma\xF1ana puede ser otro clima
+    emocional \u2014y eso tambi\xE9n es parte de vivir con emociones intensas."
+  tags: 0600000005000000
+  enterDelta:
+    affect: 5
+    impulsivity: -10
+    clarity: 10
+  options:
+  - optionId: ruminate
+    label: "Rumiar todo lo 'malo' hasta quedarte sin sue\xF1o"
+    delta:
+      affect: -15
+      impulsivity: 10
+      clarity: -15
+    requiresSkillOffer: 0
+    suggestedSkill: 0
+    outcomeWithoutSkill: "La noche agranda los fantasmas. El d\xEDa se ve peor de
+      lo que fue."
+    outcomeWithSkill: 
+    skillBonusDelta:
+      affect: 0
+      impulsivity: 0
+      clarity: 0
+  - optionId: gentle
+    label: "Anotar 1 cosa dif\xEDcil y 1 cosa que hiciste bien (por m\xEDnima que
+      sea)"
+    delta:
+      affect: 15
+      impulsivity: -15
+      clarity: 20
+    requiresSkillOffer: 1
+    suggestedSkill: 1
+    outcomeWithoutSkill: "Hay espacio para lo dif\xEDcil y para lo que s\xED cuidaste.
+      Eso es claridad, no negaci\xF3n."
+    outcomeWithSkill: "STOP al final del d\xEDa: observ\xE1s sin juzgarte del todo.
+      Cerr\xE1s con un poco m\xE1s de compasi\xF3n hacia vos."
+    skillBonusDelta:
+      affect: 10
+      impulsivity: -10
+      clarity: 15
+  recommendedSkill: 1

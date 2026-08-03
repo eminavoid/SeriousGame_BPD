@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c99425dbfc4ef4094c05d7a0f84233, type: 3}
+  m_Name: Event_manana_espejo
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.DayEvent
+  eventId: manana_espejo
+  block: 0
+  title: "Ma\xF1ana \u2014 El espejo"
+  body: "Te despert\xE1s. Por un segundo no sab\xE9s bien c\xF3mo te sent\xEDs hoy
+    ni 'qui\xE9n' sos en este d\xEDa. El caf\xE9 ayuda un poco. El mundo afuera ya
+    empez\xF3 sin vos."
+  tags: 0600000002000000
+  enterDelta:
+    affect: -10
+    impulsivity: 5
+    clarity: -5
+  options:
+  - optionId: force_ok
+    label: Forzar una sonrisa y salir igual ('tengo que estar bien')
+    delta:
+      affect: -5
+      impulsivity: 10
+      clarity: -8
+    requiresSkillOffer: 1
+    suggestedSkill: 1
+    outcomeWithoutSkill: "Sal\xEDs, pero por dentro hay un nudo. Como si llevaras
+      una m\xE1scara que pesa."
+    outcomeWithSkill: "Par\xE1s un momento: 'esto es vac\xEDo e identidad incierta,
+      no soy 'roto''. Sal\xEDs con un poco m\xE1s de aire."
+    skillBonusDelta:
+      affect: 5
+      impulsivity: -10
+      clarity: 12
+  - optionId: name_it
+    label: 'Nombrar en voz baja: ''hoy me siento difuso/a'''
+    delta:
+      affect: 5
+      impulsivity: -5
+      clarity: 10
+    requiresSkillOffer: 0
+    suggestedSkill: 0
+    outcomeWithoutSkill: "Ponerle nombre baja un poco la presi\xF3n. No lo arregla
+      todo, pero ya no est\xE1s solo/a con la niebla."
+    outcomeWithSkill: 
+    skillBonusDelta:
+      affect: 0
+      impulsivity: 0
+      clarity: 0
+  recommendedSkill: 1

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c99425dbfc4ef4094c05d7a0f84233, type: 3}
+  m_Name: Event_mediodia_cafe
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.DayEvent
+  eventId: mediodia_cafe
+  block: 1
+  title: "Mediod\xEDa \u2014 Caf\xE9 con un amigo"
+  body: "Tu amigo cancela a \xFAltimo momento: 'hoy no puedo, perd\xF3n'. De golpe
+    pasa de ser 'la mejor persona' a 'nunca le import\xE9'. El gris desaparece."
+  tags: 010000000000000003000000
+  enterDelta:
+    affect: -30
+    impulsivity: 25
+    clarity: -20
+  options:
+  - optionId: cut_off
+    label: "Cortar: 'no hace falta que nos veamos m\xE1s'"
+    delta:
+      affect: -20
+      impulsivity: 15
+      clarity: -25
+    requiresSkillOffer: 1
+    suggestedSkill: 3
+    outcomeWithoutSkill: "El impulso de todo-o-nada deja un vac\xEDo peor. Despu\xE9s
+      dud\xE1s: \xBFexager\xE9?"
+    outcomeWithSkill: "Cheque\xE1s hechos: cancel\xF3 un plan, no 'te borr\xF3 de
+      su vida'. Acci\xF3n opuesta: 'ok, \xBFreagendamos?'. Queda espacio para reparar."
+    skillBonusDelta:
+      affect: 20
+      impulsivity: -20
+      clarity: 25
+  - optionId: soft
+    label: "Responder con decepci\xF3n sin incendiar: 'me duele, espero otro d\xEDa'"
+    delta:
+      affect: 10
+      impulsivity: -10
+      clarity: 15
+    requiresSkillOffer: 0
+    suggestedSkill: 0
+    outcomeWithoutSkill: "Duele igual, pero no quem\xE1s el puente. El v\xEDnculo
+      puede sobrevivir a un mal mediod\xEDa."
+    outcomeWithSkill: 
+    skillBonusDelta:
+      affect: 0
+      impulsivity: 0
+      clarity: 0
+  recommendedSkill: 3

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b7b07ecda71f24f954801fccf6c351, type: 3}
+  m_Name: Skill_Tipp
+  m_EditorClassIdentifier: Assembly-CSharp::SeriousGameBPD.Data.SkillDef
+  id: 2
+  displayName: TIPP (lite)
+  shortDescription: Bajar la urgencia cambiando el cuerpo un momento.
+  howToUse: "Temperatura, ejercicio intenso breve, respiraci\xF3n pausada y relajaci\xF3n
+    muscular progresiva (versi\xF3n simplificada)."
+  successDelta:
+    affect: 8
+    impulsivity: -28
+    clarity: 10
