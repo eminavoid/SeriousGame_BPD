@@ -1,31 +1,35 @@
+using System.Collections;
 using SeriousGameBPD.Data;
 using SeriousGameBPD.Narrative;
 using SeriousGameBPD.Presentation;
 using SeriousGameBPD.Safety;
+using SeriousGameBPD.World;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SeriousGameBPD.Core
 {
     /// <summary>
-    /// Single persistent flow: Boot warning -> Day -> Debrief (no scene loads required).
+    /// Persistent flow: Boot warning -> House (3D day) -> Debrief.
     /// </summary>
     public class AppFlow : MonoBehaviour
     {
         public static AppFlow Instance { get; private set; }
 
         Transform _root;
+        bool _pendingBootUi;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void AutoStart()
         {
             if (Instance != null) return;
 
-            // Start from any entry scene (Boot / SampleScene / first loaded).
-            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            var scene = SceneManager.GetActiveScene();
             bool isEntry = scene.name == SceneFlow.BootScene
                            || scene.name == "SampleScene"
                            || scene.buildIndex == 0;
             if (!isEntry) return;
+            if (scene.name == SceneFlow.HouseScene) return;
 
             var go = new GameObject("AppFlow");
             DontDestroyOnLoad(go);
@@ -41,6 +45,14 @@ namespace SeriousGameBPD.Core
             }
 
             Instance = this;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         void Start()
@@ -53,6 +65,19 @@ namespace SeriousGameBPD.Core
             ShowBoot();
         }
 
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (_pendingBootUi && scene.name == SceneFlow.BootScene)
+            {
+                _pendingBootUi = false;
+                ShowBoot();
+                return;
+            }
+
+            if (scene.name == SceneFlow.HouseScene)
+                HouseBootstrap.Ensure();
+        }
+
         static void EnsureSession()
         {
             if (GameSession.Instance != null) return;
@@ -63,6 +88,19 @@ namespace SeriousGameBPD.Core
 
         public void ShowBoot()
         {
+            PlayerLock.Reset();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            if (SceneManager.GetActiveScene().name != SceneFlow.BootScene
+                && SceneManager.GetActiveScene().name != "SampleScene")
+            {
+                _pendingBootUi = true;
+                ClearRoot();
+                SceneFlow.LoadBoot();
+                return;
+            }
+
             ClearRoot();
             var warning = _root.gameObject.AddComponent<ContentWarningUI>();
             warning.Build(_root, OnAccepted);
@@ -72,24 +110,81 @@ namespace SeriousGameBPD.Core
         {
             GameSession.Instance.AcceptedWarning = true;
             GameSession.Instance.BeginNewDay(ContentFactory.LoadOrCreateDayPlan());
-            ShowDay();
+            ShowHouse();
         }
 
-        public void ShowDay()
+        public void ShowHouse()
         {
             ClearRoot();
             if (GameSession.Instance.DayPlan == null)
                 GameSession.Instance.BeginNewDay(ContentFactory.LoadOrCreateDayPlan());
+            StopAllCoroutines();
+            StartCoroutine(EnterHouse());
+        }
 
-            var day = _root.gameObject.AddComponent<DayController>();
-            day.BuildInto(_root, ShowDebrief);
+        IEnumerator EnterHouse()
+        {
+            if (HouseSceneIsInBuild())
+            {
+                var load = SceneManager.LoadSceneAsync(SceneFlow.HouseScene);
+                if (load != null)
+                    yield return load;
+            }
+
+            if (SceneManager.GetActiveScene().name != SceneFlow.HouseScene)
+            {
+                var existing = FindFirstObjectByType<HouseBootstrap>();
+                if (existing != null)
+                    Destroy(existing.gameObject);
+                yield return null;
+            }
+
+            HouseBootstrap.Ensure();
+        }
+
+        static bool HouseSceneIsInBuild()
+        {
+            int count = SceneManager.sceneCountInBuildSettings;
+            for (int i = 0; i < count; i++)
+            {
+                string path = SceneUtility.GetScenePathByBuildIndex(i);
+                if (string.IsNullOrEmpty(path)) continue;
+                string name = System.IO.Path.GetFileNameWithoutExtension(path);
+                if (name == SceneFlow.HouseScene)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void OnHouseReady(HouseContext ctx)
+        {
+            if (ctx == null) return;
+            ClearRoot();
+            var bootstrap = FindFirstObjectByType<HouseBootstrap>();
+            if (bootstrap == null) return;
+            bootstrap.AttachHud(_root, ShowDebrief);
+        }
+
+        public void ShowDay()
+        {
+            ShowHouse();
         }
 
         public void ShowDebrief()
         {
             ClearRoot();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             var debrief = _root.gameObject.AddComponent<DebriefController>();
-            debrief.BuildInto(_root, ShowDay, ShowBoot);
+            debrief.BuildInto(_root, PlayAgain, ShowBoot);
+        }
+
+        void PlayAgain()
+        {
+            PlayerLock.Reset();
+            GameSession.Instance.BeginNewDay(ContentFactory.LoadOrCreateDayPlan());
+            ShowHouse();
         }
 
         void ClearRoot()
@@ -103,7 +198,8 @@ namespace SeriousGameBPD.Core
             foreach (var behaviour in toRemove)
             {
                 if (behaviour == null) continue;
-                if (behaviour is ContentWarningUI || behaviour is DayController || behaviour is DebriefController)
+                if (behaviour is ContentWarningUI || behaviour is DayController || behaviour is DebriefController || behaviour is HouseHud
+                    || behaviour is EventRunner || behaviour is PhoneChatUI || behaviour is ThoughtOverlay || behaviour is Affect.AffectMeterUI)
                     Destroy(behaviour);
             }
         }

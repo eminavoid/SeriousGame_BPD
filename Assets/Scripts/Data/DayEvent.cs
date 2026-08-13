@@ -12,6 +12,27 @@ namespace SeriousGameBPD.Data
         Noche
     }
 
+    public enum EventTriggerType
+    {
+        Push,
+        Pull
+    }
+
+    public static class WorldAnchorIds
+    {
+        public const string Mirror = "mirror";
+        public const string Phone = "phone";
+        public const string Door = "door";
+        public const string Laptop = "laptop";
+        public const string Bed = "bed";
+        public const string Body = "body";
+        public const string Sink = "sink";
+        public const string Window = "window";
+        public const string Fridge = "fridge";
+        public const string Coffee = "coffee";
+        public const string Couch = "couch";
+    }
+
     [Serializable]
     public class EventOption
     {
@@ -36,5 +57,9 @@ namespace SeriousGameBPD.Data
         public AffectDelta enterDelta;
         public List<EventOption> options = new List<EventOption>();
         public SkillId recommendedSkill = SkillId.None;
+        public EventTriggerType triggerType = EventTriggerType.Push;
+        public string worldAnchorId;
+        public bool canDefer;
+        public AffectDelta deferDelta;
     }
 }

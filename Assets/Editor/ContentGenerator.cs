@@ -10,7 +10,7 @@ namespace SeriousGameBPD.EditorTools
     {
         const string ContentFolder = "Assets/Resources/Content";
         const string ScenesFolder = "Assets/Scenes";
-        const string SessionKey = "SeriousGameBPD_AutoSetup_v2";
+        const string SessionKey = "SeriousGameBPD_AutoSetup_v3";
 
         [InitializeOnLoadMethod]
         static void AutoSetupOnce()
@@ -28,7 +28,7 @@ namespace SeriousGameBPD.EditorTools
                     var plan = Resources.Load<DayPlan>("Content/DayPlan_MVP");
                     bool needsContent = plan == null || plan.events == null || plan.events.Count == 0;
                     bool needsBuildScenes = EditorBuildSettings.scenes == null ||
-                                           EditorBuildSettings.scenes.Length < 3 ||
+                                           EditorBuildSettings.scenes.Length < 4 ||
                                            EditorBuildSettings.scenes[0].path != $"{ScenesFolder}/Boot.unity";
 
                     if (needsContent || needsBuildScenes)
@@ -89,6 +89,8 @@ namespace SeriousGameBPD.EditorTools
             EnsureFolders();
             if (!System.IO.File.Exists($"{ScenesFolder}/Boot.unity"))
                 CreateEmptyScene($"{ScenesFolder}/Boot.unity");
+            if (!System.IO.File.Exists($"{ScenesFolder}/House.unity"))
+                CreateEmptyScene($"{ScenesFolder}/House.unity");
             if (!System.IO.File.Exists($"{ScenesFolder}/Day.unity"))
                 CreateEmptyScene($"{ScenesFolder}/Day.unity");
             if (!System.IO.File.Exists($"{ScenesFolder}/Debrief.unity"))
@@ -97,11 +99,12 @@ namespace SeriousGameBPD.EditorTools
             EditorBuildSettings.scenes = new[]
             {
                 new EditorBuildSettingsScene($"{ScenesFolder}/Boot.unity", true),
+                new EditorBuildSettingsScene($"{ScenesFolder}/House.unity", true),
                 new EditorBuildSettingsScene($"{ScenesFolder}/Day.unity", true),
                 new EditorBuildSettingsScene($"{ScenesFolder}/Debrief.unity", true),
             };
             AssetDatabase.SaveAssets();
-            Debug.Log("SeriousGame BPD: Boot/Day/Debrief scenes ready in Build Settings.");
+            Debug.Log("SeriousGame BPD: Boot/House/Day/Debrief scenes ready in Build Settings.");
         }
 
         [MenuItem("SeriousGame BPD/Setup MVP (Content + Scenes + Build)")]

@@ -33,14 +33,21 @@ namespace SeriousGameBPD.Presentation
 
         public static void EnsureEventSystem()
         {
-            if (Object.FindFirstObjectByType<EventSystem>() != null) return;
-            var es = new GameObject("EventSystem");
-            es.AddComponent<EventSystem>();
+            var existing = Object.FindFirstObjectByType<EventSystem>();
+            if (existing == null)
+            {
+                var es = new GameObject("EventSystem");
+                es.AddComponent<EventSystem>();
 #if ENABLE_INPUT_SYSTEM
-            es.AddComponent<InputSystemUIInputModule>();
+                es.AddComponent<InputSystemUIInputModule>();
 #else
-            es.AddComponent<StandaloneInputModule>();
+                es.AddComponent<StandaloneInputModule>();
 #endif
+                existing = es.GetComponent<EventSystem>();
+            }
+
+            if (existing != null && existing.transform.parent == null)
+                Object.DontDestroyOnLoad(existing.gameObject);
         }
 
         public static Canvas CreateCanvas(string name)

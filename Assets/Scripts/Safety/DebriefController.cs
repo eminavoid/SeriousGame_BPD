@@ -52,7 +52,7 @@ namespace SeriousGameBPD.Safety
             _onPlayAgain = () =>
             {
                 GameSession.Instance.BeginNewDay(ContentFactory.LoadOrCreateDayPlan());
-                SceneFlow.LoadDay();
+                SceneFlow.LoadHouse();
             };
             _onBackToBoot = SceneFlow.LoadBoot;
             BuildUi();

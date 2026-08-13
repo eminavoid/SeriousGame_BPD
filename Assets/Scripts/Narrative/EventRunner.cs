@@ -11,10 +11,9 @@ namespace SeriousGameBPD.Narrative
 {
     public class EventRunner : MonoBehaviour
     {
+        Transform _hudRoot;
         Transform _root;
         SkillController _skills;
-        DayEvent _current;
-        EventOption _pendingOption;
         Action _onFinishedEvent;
 
         Text _blockLabel;
@@ -24,11 +23,18 @@ namespace SeriousGameBPD.Narrative
         RectTransform _optionsRoot;
         GameObject _outcomePanel;
         Text _outcomeText;
+        GameObject _blocker;
+
+        public bool IsPlaying { get; private set; }
 
         public void Build(Transform parent, SkillController skills)
         {
             _skills = skills;
-            _root = UITheme.Panel(parent, "EventPanel",
+            _hudRoot = parent;
+            _blocker = UITheme.Panel(parent, "EventBlocker",
+                Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
+                new Color(0f, 0f, 0f, 0.55f)).gameObject;
+            _root = UITheme.Panel(_blocker.transform, "EventPanel",
                 new Vector2(0.08f, 0.06f), new Vector2(0.92f, 0.78f),
                 Vector2.zero, Vector2.zero, UITheme.BgPanel);
 
@@ -55,20 +61,36 @@ namespace SeriousGameBPD.Narrative
             layout.childControlWidth = true;
             layout.childForceExpandHeight = false;
             layout.childForceExpandWidth = true;
+            Hide();
+        }
+
+        public void Hide()
+        {
+            IsPlaying = false;
+            if (_blocker != null)
+                _blocker.SetActive(false);
         }
 
         public void Play(DayEvent evt, Action onFinished)
         {
-            _current = evt;
-            _onFinishedEvent = onFinished;
+            _onFinishedEvent = () =>
+            {
+                IsPlaying = false;
+                Hide();
+                onFinished?.Invoke();
+            };
             ClearOptions();
             HideOutcome();
 
             if (evt == null)
             {
-                onFinished?.Invoke();
+                _onFinishedEvent?.Invoke();
                 return;
             }
+
+            if (_blocker != null)
+                _blocker.SetActive(true);
+            IsPlaying = true;
 
             GameSession.Instance.RegisterTags(evt.tags);
             GameSession.Instance.Affect.Apply(evt.enterDelta);
@@ -82,7 +104,7 @@ namespace SeriousGameBPD.Narrative
             {
                 var cont = UITheme.Button(_optionsRoot, "Continue", "Continuar", UITheme.Accent, new Vector2(400, 64));
                 cont.gameObject.AddComponent<LayoutElement>().preferredHeight = 64;
-                cont.onClick.AddListener(() => _onFinishedEvent?.Invoke());
+                cont.onClick.AddListener(Finish);
                 return;
             }
 
@@ -98,10 +120,9 @@ namespace SeriousGameBPD.Narrative
 
         void OnOptionChosen(EventOption opt)
         {
-            _pendingOption = opt;
             ClearOptions();
 
-            if (opt.requiresSkillOffer && opt.suggestedSkill != SkillId.None && _skills.TryGet(opt.suggestedSkill, out _))
+            if (opt.requiresSkillOffer && opt.suggestedSkill != SkillId.None && _skills != null && _skills.TryGet(opt.suggestedSkill, out _))
             {
                 OfferSkill(opt);
                 return;
@@ -127,7 +148,7 @@ namespace SeriousGameBPD.Narrative
                 ClearOptions();
                 if (_skills.TryGet(opt.suggestedSkill, out var skill))
                 {
-                    skill.Present(_root, success =>
+                    skill.Present(_hudRoot != null ? _hudRoot : _root, success =>
                     {
                         Resolve(opt, usedSkill: success);
                     });
@@ -176,8 +197,16 @@ namespace SeriousGameBPD.Narrative
             next.onClick.AddListener(() =>
             {
                 HideOutcome();
-                _onFinishedEvent?.Invoke();
+                Finish();
             });
+        }
+
+        void Finish()
+        {
+            var done = _onFinishedEvent;
+            _onFinishedEvent = null;
+            Hide();
+            done?.Invoke();
         }
 
         void HideOutcome()

@@ -32,5 +32,7 @@ namespace SeriousGameBPD.Skills
         {
             return TryGet(id, out var s) ? s.Def : null;
         }
+
+        public IEnumerable<SkillId> Ids => _skills.Keys;
     }
 }

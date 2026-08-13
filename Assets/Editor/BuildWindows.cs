@@ -24,6 +24,7 @@ namespace SeriousGameBPD.EditorTools
                 scenes = new[]
                 {
                     "Assets/Scenes/Boot.unity",
+                    "Assets/Scenes/House.unity",
                     "Assets/Scenes/Day.unity",
                     "Assets/Scenes/Debrief.unity"
                 },

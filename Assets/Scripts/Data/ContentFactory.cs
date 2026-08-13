@@ -135,7 +135,7 @@ namespace SeriousGameBPD.Data
                     requiresSkillOffer = false
                 }
             };
-            return e;
+            return BindWorld(e, WorldAnchorIds.Mirror, EventTriggerType.Pull, true, new AffectDelta(-3, 4, -3));
         }
 
         static DayEvent EventMananaMensaje()
@@ -171,7 +171,7 @@ namespace SeriousGameBPD.Data
                     outcomeWithoutSkill = "Cuesta. El cuerpo sigue en alarma. Pero el silencio no era abandono: era la vida del otro."
                 }
             };
-            return e;
+            return BindWorld(e, WorldAnchorIds.Phone, EventTriggerType.Push, true, new AffectDelta(-4, 6, -4));
         }
 
         static DayEvent EventMediodiaAmistad()
@@ -207,7 +207,7 @@ namespace SeriousGameBPD.Data
                     outcomeWithoutSkill = "Duele igual, pero no quemás el puente. El vínculo puede sobrevivir a un mal mediodía."
                 }
             };
-            return e;
+            return BindWorld(e, WorldAnchorIds.Phone, EventTriggerType.Push, true, new AffectDelta(-5, 5, -5));
         }
 
         static DayEvent EventTardeUrgencia()
@@ -247,7 +247,7 @@ namespace SeriousGameBPD.Data
                     skillBonusDelta = new AffectDelta(10, -20, 18)
                 }
             };
-            return e;
+            return BindWorld(e, WorldAnchorIds.Body, EventTriggerType.Push, true, new AffectDelta(-4, 8, -4));
         }
 
         static DayEvent EventTardeTrabajo()
@@ -283,7 +283,7 @@ namespace SeriousGameBPD.Data
                     outcomeWithoutSkill = "Duele, pero el diálogo vuelve al terreno de lo concreto. Sos más que un comentario."
                 }
             };
-            return e;
+            return BindWorld(e, WorldAnchorIds.Laptop, EventTriggerType.Push, true, new AffectDelta(-3, 4, -3));
         }
 
         static DayEvent EventNocheCierre()
@@ -319,6 +319,51 @@ namespace SeriousGameBPD.Data
                     skillBonusDelta = new AffectDelta(10, -10, 15)
                 }
             };
+            return BindWorld(e, WorldAnchorIds.Bed, EventTriggerType.Pull, true, new AffectDelta(-4, 5, -5));
+        }
+
+        public static DayEvent BuildDoorKnockEvent()
+        {
+            var e = ScriptableObject.CreateInstance<DayEvent>();
+            e.eventId = "mediodia_puerta";
+            e.block = DayBlock.Mediodia;
+            e.title = "La puerta";
+            e.body =
+                "Alguien golpea. El pecho se aprieta: ¿es tu amigo? ¿vino igual? ¿es otra persona? " +
+                "El miedo al abandono y la alarma se mezclan antes de saber quién es.";
+            e.tags = new List<EducationalTag> { EducationalTag.Abandono };
+            e.enterDelta = new AffectDelta(-12, 15, -8);
+            e.recommendedSkill = SkillId.Stop;
+            e.options = new List<EventOption>
+            {
+                new EventOption
+                {
+                    optionId = "open",
+                    label = "Abrir: es el delivery del vecino. Se equivocó de puerta.",
+                    delta = new AffectDelta(8, -12, 10),
+                    outcomeWithoutSkill = "El cuerpo tarda en bajar. No era abandono: era una puerta equivocada."
+                },
+                new EventOption
+                {
+                    optionId = "ignore",
+                    label = "No abrir. Quedarte quieto/a hasta que se vaya.",
+                    delta = new AffectDelta(-10, 8, -8),
+                    requiresSkillOffer = true,
+                    suggestedSkill = SkillId.Stop,
+                    outcomeWithoutSkill = "Los golpes paran. Queda la duda: ¿y si era alguien que sí importaba?",
+                    outcomeWithSkill = "STOP: observás el miedo sin tener que resolverlo ya. Cuando paran los golpes, respirás. Podés chequear después.",
+                    skillBonusDelta = new AffectDelta(8, -12, 12)
+                }
+            };
+            return BindWorld(e, WorldAnchorIds.Door, EventTriggerType.Push, true, new AffectDelta(-3, 5, -3));
+        }
+
+        static DayEvent BindWorld(DayEvent e, string anchor, EventTriggerType type, bool canDefer, AffectDelta defer)
+        {
+            e.worldAnchorId = anchor;
+            e.triggerType = type;
+            e.canDefer = canDefer;
+            e.deferDelta = defer;
             return e;
         }
     }
