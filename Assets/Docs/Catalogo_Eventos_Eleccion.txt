@@ -1,0 +1,371 @@
+CATÁLOGO DE EVENTOS DE ELECCIÓN
+Un Día Con Emociones — TLP
+Estado actual del juego (ContentFactory.cs + DayDirector.cs)
+
+
+CÓMO LEER ESTO
+==============
+El juego no desbloquea una herramienta nueva por evento. El jugador ya tiene STOP, TIPP y Acción opuesta.
+Cada escena OFRECE la que mejor pega con esa activación.
+
+Medidor: Afecto (-100 a +100), Impulsividad (0 a 100), Claridad (0 a 100).
+Al entrar a un evento se aplica el delta de entrada. Si se evita el disparador, el medidor empeora cada ~4 s.
+
+Lógica de matching (TDC):
+- Cuerpo en emergencia  ->  TIPP
+- Hay que no actuar todavía  ->  STOP
+- La emoción no cierra con los hechos (o es ineficaz)  ->  chequear hechos + acción opuesta
+
+Las tres tools:
+- STOP: Stop -> dar un paso atrás -> observar -> seguir con más claridad. Efecto propio: Afecto 0 / Impulsividad -20 / Claridad +15.
+- TIPP (lite): temperatura, ejercicio breve, respiración pausada, relajación muscular. Efecto propio: Afecto +8 / Impulsividad -28 / Claridad +10.
+- Acción opuesta / hechos: ¿qué sé con certeza? ¿qué interpreto? Si la emoción no encaja, actuar al revés del impulso. Efecto propio: Afecto +5 / Impulsividad -15 / Claridad +20.
+
+Si se usa la skill, el medidor suma: delta de la opción + bonus de la opción + efecto propio de la skill.
+
+
+MAPA RÁPIDO
+===========
+#  Evento        Estímulo                         Criterio TLP                    Skill
+1  Espejo        Niebla de identidad al despertar Identidad, vacío                STOP
+2  Mensaje       Silencio digital = abandono      Abandono, idealización          TIPP
+3  Café          Cancelar -> todo o nada          Splitting, ira, abandono        Acción opuesta
+4  Puerta        Señal ambigua (sistema cebado)   Hipervigilancia de abandono     STOP
+5  Urgencia      Ola sin causa + ganas de descargar Desregulación, impulsividad   TIPP / STOP
+6  Feedback      Crítica leve = "no sirvo"        Identidad, blanco/negro         Acción opuesta
+7  Noche         Rumiación que reescribe el día   Persistencia afectiva           STOP
+
+Nota: psicoeducación lúdica, no terapia. Los estímulos están suavizados. No hay autolesión ni suicidio.
+
+
+------------------------------------------------------------------------------
+1. MAÑANA — EL ESPEJO
+------------------------------------------------------------------------------
+Hora: 07:36
+Ancla: espejo (baño)     Disparo: Pull (el jugador se acerca; si no, se fuerza)
+Temas: identidad inestable · vacío
+Skill recomendada: STOP
+Id: manana_espejo
+
+QUÉ PASA
+Te despertás. Por un segundo no sabés bien cómo te sentís hoy ni "quién" sos en este día. El café ayuda un poco. El mundo afuera ya empezó sin vos.
+
+No hay conflicto interpersonal todavía: el estímulo es interno. El juego invita a mirarse al espejo. Es el tutorial emocional del día: notar un estado difuso antes de que lleguen los disparadores relacionales.
+
+Al entrar:     Afecto -10 · Impulsividad +5 · Claridad -5
+Si se pospone: Afecto -3 · Impulsividad +4 · Claridad -3 cada ~4 s
+Pensamiento:   "El baño está ahí. El espejo también. ¿Quién mirás hoy?"
+
+OPCIÓN 1 — Forzar una sonrisa y salir igual ("tengo que estar bien")
+  Medidor: Afecto -5 · Impulsividad +10 · Claridad -8
+  Ofrece herramienta: SÍ — STOP
+  Outcome sin tool: Salís, pero por dentro hay un nudo. Como si llevaras una máscara que pesa.
+  Outcome con tool: Parás un momento: "esto es vacío e identidad incierta, no soy 'roto'". Salís con un poco más de aire.
+  Bonus al usar la skill: Afecto +5 · Impulsividad -10 · Claridad +12
+                      + efecto de STOP: Afecto 0 · Impulsividad -20 · Claridad +15
+
+OPCIÓN 2 — Nombrar en voz baja: "hoy me siento difuso/a"
+  Medidor: Afecto +5 · Impulsividad -5 · Claridad +10
+  Ofrece herramienta: NO (ya es la conducta skillful)
+  Outcome: Ponerle nombre baja un poco la presión. No lo arregla todo, pero ya no estás solo/a con la niebla.
+
+POR QUÉ ESA HERRAMIENTA
+STOP (Stop -> Take a step back -> Observe -> Proceed mindfully).
+Acá el impulso no es gritar ni cortar un vínculo: es maquillar el malestar ("tengo que estar bien") y salir con una máscara. Eso es típico cuando hay vergüenza por el vacío: se tapa en vez de observarse. STOP se ofrece en la opción impulsiva para entrenar la pausa: nombrar "esto es vacío e identidad incierta" antes de convertirse en personaje. La opción 2 ya es observar/nombrar, por eso no dispara el minijuego.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+En TLP la imagen de sí suele ser inestable: no hay un "yo" continuo que sobreviva de un día al otro. Al despertar, sin el ancla de otra persona ni de un rol, muchas personas describen niebla, extrañeza o vacío. El espejo es un disparador concreto de esa pregunta ("¿quién mirás hoy?").
+El estímulo no busca asustar: busca que se sienta la falta de un self sólido —criterio de alteración de la identidad y de vacío crónico— en un contexto cotidiano. Forzar la sonrisa modela la invalidación autoimpuesta; nombrar el estado modela mindfulness y validación. Sigue el modelo biosocial de Linehan: alta sensibilidad emocional + tendencia a escapar del sentimiento en vez de habitarlo.
+
+Criterios: DSM-5 identidad (3) y vacío crónico (7). TDC: mindfulness del estado interno; evitar la huida por apariencia.
+
+
+------------------------------------------------------------------------------
+2. MAÑANA — TRES PUNTITOS… Y SILENCIO
+------------------------------------------------------------------------------
+Hora: 08:12
+Ancla: celular           Disparo: Push (el celular vibra; UI de chat)
+Temas: miedo al abandono · idealización / devaluación
+Skill recomendada: TIPP (lite)
+Id: manana_mensaje
+
+QUÉ PASA
+Le escribiste a alguien importante. Vio el mensaje. Empezó a escribir. Dejó de escribir. Pasaron veinte minutos. Tu pecho late como si fuera una emergencia.
+
+El celular entra en modo buzz. Un silencio digital (visto, escribiendo, silencio) se convierte en emergencia fisiológica. Enseña que, en TLP, el sistema de amenaza puede activarse sin que haya un abandono real.
+
+Al entrar:     Afecto -25 · Impulsividad +30 · Claridad -15  (el salto más brusco de impulsividad de la mañana)
+Si se pospone: Afecto -4 · Impulsividad +6 · Claridad -4
+Pensamiento:   "El celular vibra. El pecho responde antes que la cabeza."
+Si se evita:   "Sigue ahí. Evitarlo no apaga la alarma: la sube."
+
+OPCIÓN 1 — Mandar varios mensajes seguidos ("¿estás enojado/a conmigo?")
+  Medidor: Afecto -15 · Impulsividad +20 · Claridad -20
+  Ofrece herramienta: SÍ — TIPP (lite)
+  Outcome sin tool: La urgencia habla por vos. Después llega la vergüenza. La otra persona responde tarde: estaba en una reunión.
+  Outcome con tool: Usás TIPP un minuto: respirás, soltás hombros. Esperás. Cuando responde, el alivio es real —y no tuviste que incendiar el chat.
+  Bonus al usar la skill: Afecto +15 · Impulsividad -25 · Claridad +15
+                      + efecto de TIPP: Afecto +8 · Impulsividad -28 · Claridad +10
+
+OPCIÓN 2 — Esperar y distraerte un rato (aunque cueste)
+  Medidor: Afecto +5 · Impulsividad -10 · Claridad +8
+  Ofrece herramienta: NO
+  Outcome: Cuesta. El cuerpo sigue en alarma. Pero el silencio no era abandono: era la vida del otro.
+
+POR QUÉ ESA HERRAMIENTA
+TIPP (lite) — Temperatura, ejercicio Intenso breve, respiración Pausada, relajación muscular.
+Cuando la activación pasa de cierto umbral, el cerebro no puede "pensar bien": hay que bajar el cuerpo primero. Acá la impulsividad de entrada es +30: es crisis de alarma, no un problema de hechos. Chequear hechos o acción opuesta llegarían demasiado pronto. TIPP es tolerancia al malestar para que la urgencia de spamear el chat baje lo suficiente como para esperar. El outcome con skill muestra el dato correctivo: estaba en una reunión. El alivio llega igual, pero sin la vergüenza post-impulso.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+El miedo al abandono es el eje relacional del TLP. Un visto sin respuesta, o los tres puntitos que se apagan, es un micro-rechazo ambiguo: el cerebro hipervigilante lo lee como "me está dejando". Eso empuja los esfuerzos desesperados por evitar el abandono (mensaje en ráfaga, protesta, pedido de confirmación). Al mismo tiempo hay idealización: "alguien importante" tiene el poder de regular o desregular todo el estado interno.
+El estímulo está calibrado para ser cotidiano —no una ruptura dramática—, porque en TLP la desregulación a menudo nace de señales pequeñas. Enseña la diferencia entre hecho (no contestó todavía) e interpretación (ya no le importo).
+
+Criterios: DSM-5 abandono (1) y relaciones intensas / idealización (2). Proceso: sensibilidad al rechazo + intolerancia a la incertidumbre interpersonal.
+
+
+------------------------------------------------------------------------------
+3. MEDIODÍA — CAFÉ CON UN AMIGO
+------------------------------------------------------------------------------
+Hora: 12:15
+Ancla: celular           Disparo: Push (otra vez el chat)
+Temas: pensamiento blanco/negro · miedo al abandono · ira intensa
+Skill recomendada: Acción opuesta / chequear hechos
+Id: mediodia_cafe
+
+QUÉ PASA
+Tu amigo cancela a último momento: "hoy no puedo, perdón". De golpe pasa de ser "la mejor persona" a "nunca le importé". El gris desaparece.
+
+Un plan cotidiano se cae. El texto nombra el splitting: de idealización a devaluación en una sola frase. Cuando el pensamiento se vuelve todo-o-nada, no hay espacio mental para hipótesis alternativas. La ira y el abandono viajan juntos: cancelar se siente como traición, no como un imprevisto.
+
+Al entrar:     Afecto -30 · Impulsividad +25 · Claridad -20
+Si se pospone: Afecto -5 · Impulsividad +5 · Claridad -5
+
+OPCIÓN 1 — Cortar: "no hace falta que nos veamos más"
+  Medidor: Afecto -20 · Impulsividad +15 · Claridad -25
+  Ofrece herramienta: SÍ — Acción opuesta / chequear hechos
+  Outcome sin tool: El impulso de todo-o-nada deja un vacío peor. Después dudás: ¿exageré?
+  Outcome con tool: Chequeás hechos: canceló un plan, no "te borró de su vida". Acción opuesta: "ok, ¿reagendamos?". Queda espacio para reparar.
+  Bonus al usar la skill: Afecto +20 · Impulsividad -20 · Claridad +25
+                      + efecto de Acción opuesta: Afecto +5 · Impulsividad -15 · Claridad +20
+
+OPCIÓN 2 — Responder con decepción sin incendiar: "me duele, espero otro día"
+  Medidor: Afecto +10 · Impulsividad -10 · Claridad +15
+  Ofrece herramienta: NO (ya es acción opuesta "casera")
+  Outcome: Duele igual, pero no quemás el puente. El vínculo puede sobrevivir a un mal mediodía.
+
+POR QUÉ ESA HERRAMIENTA
+Chequear hechos + Acción opuesta.
+Acá sí hay un problema cognitivo: la emoción (rabia de abandono, impulso de cortar) no encaja del todo con los hechos (un amigo canceló un café). En TDC, acción opuesta se usa cuando la emoción es injustificada o ineficaz. El impulso es terminar el vínculo; la acción opuesta es sostenerlo (reagendar, expresar decepción sin incendiar). Chequear hechos corta el splitting: "canceló un plan" no es "te borró de su vida". Se ofrece en la opción de corte porque el jugador está a un toque del extremo. La opción 2 ya es acción opuesta, por eso no pide el minijuego.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+El pensamiento dicotómico simplifica el caos emocional: si no es perfecto, es nada. En relaciones con TLP, una decepción puntual puede voltear la representación del otro (idealización -> devaluación) y disparar abandono anticipado: "corto yo antes de que me dejen". La ira intensa aparece como protesta relacional, no como agresividad gratuita.
+El estímulo es deliberadamente menor (cancelar un café) para mostrar cómo un evento de baja magnitud objetiva puede tener alta magnitud subjetiva: eso es desregulación, no "drama".
+
+Criterios: DSM-5 abandono (1), relaciones inestables con idealización/devaluación (2), ira intensa (8). TDC: emotion mind vs. reasonable mind; hechos vs. interpretación.
+
+
+------------------------------------------------------------------------------
+4. MEDIODÍA — LA PUERTA
+------------------------------------------------------------------------------
+Hora: 13:06
+Ancla: puerta            Disparo: Push (golpean)
+Temas: miedo al abandono
+Skill recomendada: STOP
+Id: mediodia_puerta
+Nota: beat extra (CountsForDay = false). No es un hito de progresión; enseña hipervigilancia.
+
+QUÉ PASA
+Alguien golpea. El pecho se aprieta: ¿es tu amigo? ¿vino igual? ¿es otra persona? El miedo al abandono y la alarma se mezclan antes de saber quién es.
+
+Justo después del café cancelado, alguien golpea. El juego no da información: el jugador llena el vacío con hipótesis. Es un disparador de ambigüedad, no de hecho. Si se abre, es el delivery del vecino. Si no se abre, queda la duda.
+
+Al entrar:     Afecto -12 · Impulsividad +15 · Claridad -8
+Si se pospone: Afecto -3 · Impulsividad +5 · Claridad -3
+Pensamiento:   "Golpean. ¿Quién es? ¿Por qué ahora?"
+Si se evita:   "Los golpes siguen. El pecho también."
+
+OPCIÓN 1 — Abrir: es el delivery del vecino. Se equivocó de puerta.
+  Medidor: Afecto +8 · Impulsividad -12 · Claridad +10
+  Ofrece herramienta: NO
+  Outcome: El cuerpo tarda en bajar. No era abandono: era una puerta equivocada.
+
+OPCIÓN 2 — No abrir. Quedarte quieto/a hasta que se vaya.
+  Medidor: Afecto -10 · Impulsividad +8 · Claridad -8
+  Ofrece herramienta: SÍ — STOP
+  Outcome sin tool: Los golpes paran. Queda la duda: ¿y si era alguien que sí importaba?
+  Outcome con tool: STOP: observás el miedo sin tener que resolverlo ya. Cuando paran los golpes, respirás. Podés chequear después.
+  Bonus al usar la skill: Afecto +8 · Impulsividad -12 · Claridad +12
+                      + efecto de STOP: Afecto 0 · Impulsividad -20 · Claridad +15
+
+POR QUÉ ESA HERRAMIENTA
+STOP. La alarma pide una decisión inmediata (abrir / esconderse) como si de eso dependiera el vínculo. STOP entrena no resolver en el pico: observar el miedo como miedo, no como dato sobre quién está detrás. Se ofrece en "no abrir" porque esa opción deja al jugador fusionado con la duda; la skill introduce un paso atrás para que la evitación no se vuelva rumiación. Abrir sin skill igual enseña algo TDC: el cuerpo no baja al ritmo de los hechos (retorno lento a la línea de base).
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+Después de un abandono percibido (el café), el sistema de amenaza queda cebado: cualquier estímulo interpersonal ambiguo se lee como continuación de la historia. Un golpe en la puerta es un cue sin contenido: el TLP no necesita una traición real para activar pánico, solo incertidumbre. Es hipervigilancia de abandono, no paranoia delirante.
+El twist del delivery enseña un dato correctivo suave: la alarma puede ser verdadera como sensación y falsa como predicción. "Tu detector de humo es muy sensible; no siempre hay incendio."
+
+Criterios: DSM-5 abandono (1) en clave anticipatoria / hipervigilancia. Modelo biosocial: alta reactividad + retorno lento.
+
+
+------------------------------------------------------------------------------
+5. TARDE — LA URGENCIA EN EL PECHO
+------------------------------------------------------------------------------
+Hora: 16:06
+Ancla: cuerpo            Disparo: Push inmediato (ola visual; no hay objeto que "abrir")
+Temas: desregulación emocional · vacío · ira intensa
+Skill recomendada: TIPP (lite) — y STOP en la segunda opción
+Id: tarde_urgencia
+
+QUÉ PASA
+Estás solo/a. Una ola sube sin una causa clara: ira, tristeza, vacío. Querés hacer algo YA para que pare —cualquier cosa. El cuerpo pide alivio inmediato.
+
+A diferencia de los otros eventos, acá no hay mensaje, amigo ni jefe. El disparador es endógeno. Eso es clave para no enseñar que "siempre hay un motivo externo". Las dos opciones ofrecen herramienta: es el evento de tolerancia al malestar, no de resolver un problema social.
+
+Al entrar:     Afecto -35 · Impulsividad +40 · Claridad -25  (el pico más alto de impulsividad del día)
+Si se pospone: casi no hay diferir; se dispara al entrar en pending.
+Pensamiento:   "Una ola sube sin una causa clara. El cuerpo pide alivio YA."
+
+OPCIÓN 1 — Actuar el impulso (gritar, romper algo chico, mandar un mensaje hiriente)
+  Medidor: Afecto -10 · Impulsividad -5 · Claridad -30
+  Ofrece herramienta: SÍ — TIPP (lite)
+  Outcome sin tool: Hay un segundo de descarga… y después más culpa y más soledad.
+  Outcome con tool: TIPP: agua fría en la cara, 20 sentadillas, respirar más lento. La ola sigue ahí, pero ya no te arrastra igual.
+  Bonus al usar la skill: Afecto +25 · Impulsividad -35 · Claridad +20
+                      + efecto de TIPP: Afecto +8 · Impulsividad -28 · Claridad +10
+
+OPCIÓN 2 — Surfear la ola: cronometrar 10 minutos sin decidir nada grande
+  Medidor: Afecto +5 · Impulsividad -15 · Claridad +10
+  Ofrece herramienta: SÍ — STOP
+  Outcome sin tool: Diez minutos duelen. La urgencia baja un poco sola. Aprendés: las olas pasan.
+  Outcome con tool: STOP te da permiso a no decidir en el pico. Observás la emoción como clima, no como verdad absoluta.
+  Bonus al usar la skill: Afecto +10 · Impulsividad -20 · Claridad +18
+                      + efecto de STOP: Afecto 0 · Impulsividad -20 · Claridad +15
+
+POR QUÉ ESA HERRAMIENTA
+Dos herramientas, dos capas de la misma crisis.
+
+TIPP en la opción de actuar el impulso: cuando el cuerpo pide descarga (gritar, romper, mensaje hiriente), hace falta una descarga alternativa y no dañina por la vía fisiológica. El outcome sin skill enseña el ciclo: alivio de un segundo -> culpa -> más soledad.
+
+STOP en surfear la ola: el jugador ya eligió no actuar; la skill refuerza el permiso de no decidir en el pico y mira la emoción como clima (ride the wave). El evento recomienda TIPP a nivel general porque la activación es demasiado alta para quedarse solo en lo cognitivo.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+La desregulación afectiva del TLP no siempre tiene un precipitante claro: el ánimo puede cambiar en horas y el vacío puede volverse urgencia de hacer algo para sentir que existís. La impulsividad, en este marco, no es "falta de carácter": es un intento tosco de regular una emoción intolerable.
+El juego nunca ofrece autolesión ni sustancias (línea de seguridad) y sí equivalentes de baja peligrosidad (gritar, romper algo chico, mensaje hiriente) para mostrar el mecanismo sin reproducir daño. El estímulo busca que se note la diferencia entre la ola y la acción: en TLP esa fusión ("si lo siento, tengo que hacerlo") es el núcleo de muchos problemas. Enseñar que se puede esperar diez minutos es enseñar que el afecto no es una orden.
+
+Criterios: DSM-5 impulsividad (4), inestabilidad afectiva (6), vacío (7), ira (8). TDC: crisis survival vs. ride the wave; no usar problem-solving en el pico.
+
+
+------------------------------------------------------------------------------
+6. TARDE — UN COMENTARIO EN EL TRABAJO / ESTUDIO
+------------------------------------------------------------------------------
+Hora: 17:27
+Ancla: notebook          Disparo: Push (notificación; se interactúa con la laptop)
+Temas: pensamiento blanco/negro · identidad inestable
+Skill recomendada: Acción opuesta / chequear hechos
+Id: tarde_feedback
+
+QUÉ PASA
+Alguien dice: "esto podría mejorar". En tu cabeza se traduce a: "soy un desastre, no sirvo". La vergüenza quema. Querés desaparecer… o demostrar que sos perfecto/a ya.
+
+El disparador es un feedback leve, profesional, no un ataque. El evento muestra la traducción automática de un comentario sobre una tarea a una sentencia sobre el valor de la persona. Eso es splitting aplicado al self: o soy perfecto o no sirvo.
+
+Al entrar:     Afecto -20 · Impulsividad +20 · Claridad -15
+Si se pospone: Afecto -3 · Impulsividad +4 · Claridad -3
+Pensamiento:   "Una notificación en el notebook. 'esto podría mejorar'."
+Si se evita:   "El comentario no se borra porque no lo abras."
+
+OPCIÓN 1 — Hundirse: "siempre fallo, mejor ni intento"
+  Medidor: Afecto -25 · Impulsividad +5 · Claridad -20
+  Ofrece herramienta: SÍ — Acción opuesta / chequear hechos
+  Outcome sin tool: El blanco/negro te deja sin margen. Un feedback se vuelve una sentencia sobre tu valor.
+  Outcome con tool: Hechos: pidieron un ajuste, no tu expulsión. Acción opuesta: preguntar "¿qué parte priorizo?". Recuperás agencia.
+  Bonus al usar la skill: Afecto +20 · Impulsividad -15 · Claridad +22
+                      + efecto de Acción opuesta: Afecto +5 · Impulsividad -15 · Claridad +20
+
+OPCIÓN 2 — Pedir un ejemplo concreto y respirar antes de responder
+  Medidor: Afecto +8 · Impulsividad -12 · Claridad +12
+  Ofrece herramienta: NO
+  Outcome: Duele, pero el diálogo vuelve al terreno de lo concreto. Sos más que un comentario.
+
+POR QUÉ ESA HERRAMIENTA
+Chequear hechos + Acción opuesta.
+Los hechos: pidieron un ajuste. La emoción: vergüenza identitaria, impulso de rendirse. La emoción no encaja con la magnitud del evento, y además es ineficaz (abandonar el intento empeora el resultado). Acción opuesta al hundirse = quedarse en la tarea y pedir un dato concreto. Eso saca el problema del "soy" al "hice".
+No se ofrece TIPP porque la activación es alta pero el error central es cognitivo-identitario, no una crisis de cuerpo.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+La identidad inestable hace que la autoestima no tenga un piso: un comentario menor puede derrumbar el valor entero. Muchas personas con TLP describen vergüenza intensa y "no sirvo" tras críticas ordinarias, o el polo inverso: perfeccionismo urgente para no volver a sentir esa vergüenza.
+El estímulo es universal (trabajo/estudio) y no requiere una relación de apego: enseña que el blanco/negro también se aplica hacia uno mismo. Para un familiar o un compañero que juegue, es una ventana empática: "esto podría mejorar" no era hostil, pero por dentro se oyó como una condena.
+
+Criterios: DSM-5 identidad (3) y polarización sobre el self. Procesos: vergüenza, autoinvalidación, fusión pensamiento-identidad.
+
+
+------------------------------------------------------------------------------
+7. NOCHE — REVISAR EL DÍA
+------------------------------------------------------------------------------
+Hora: 21:12
+Ancla: cama              Disparo: Pull (acercarse a la cama; si no, se fuerza el cierre)
+Temas: identidad inestable · desregulación emocional
+Skill recomendada: STOP
+Id: noche_cierre
+
+QUÉ PASA
+La casa está quieta. Repasás lo que pasó. Algunas cosas duelen. Otras las manejaste mejor de lo que creías. Mañana puede ser otro clima emocional —y eso también es parte de vivir con emociones intensas.
+
+Es el debrief lúdico, todavía dentro del día. El conflicto ahora es con el relato del día. A diferencia de los picos anteriores, el delta de entrada es levemente regulador: hay una ventana para integrar. Si el jugador rumia, esa ventana se cierra y el día se reescribe como peor de lo que fue.
+
+Al entrar:     Afecto +5 · Impulsividad -10 · Claridad +10  (el único evento que entra subiendo un poco el estado)
+Si se pospone: Afecto -4 · Impulsividad +5 · Claridad -5
+Pensamiento:   "La casa se apaga. El día pide cierre — o rumia."
+
+OPCIÓN 1 — Rumiar todo lo "malo" hasta quedarte sin sueño
+  Medidor: Afecto -15 · Impulsividad +10 · Claridad -15
+  Ofrece herramienta: NO
+  Outcome: La noche agranda los fantasmas. El día se ve peor de lo que fue.
+
+OPCIÓN 2 — Anotar 1 cosa difícil y 1 cosa que hiciste bien (por mínima que sea)
+  Medidor: Afecto +15 · Impulsividad -15 · Claridad +20
+  Ofrece herramienta: SÍ — STOP
+  Outcome sin tool: Hay espacio para lo difícil y para lo que sí cuidaste. Eso es claridad, no negación.
+  Outcome con tool: STOP al final del día: observás sin juzgarte del todo. Cerrás con un poco más de compasión hacia vos.
+  Bonus al usar la skill: Afecto +10 · Impulsividad -10 · Claridad +15
+                      + efecto de STOP: Afecto 0 · Impulsividad -20 · Claridad +15
+
+POR QUÉ ESA HERRAMIENTA
+STOP en la opción skillful, no en la impulsiva. Acá STOP es cierre consciente (observar sin juzgar, proceder hacia el descanso), no freno de un acto dañino. La rumiación nocturna ES el impulso; el juego no ofrece skill ahí a propósito: rumiar no se "arregla" con un minijuego de crisis, se evita eligiendo otro ritual. La herramienta se pone donde hay que sostener la mirada no-juzgadora sobre el día. Complementa el debrief posterior (límites del juego, recursos, lo aprendido).
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+El retorno lento a la línea de base hace que la noche sea peligrosa: sin estímulos externos, la emoción residual se convierte en historia ("hoy fui un desastre"). Eso pega otra vez en la identidad y prepara un mal dormir, que empeora la desregulación del día siguiente.
+El estímulo no es un drama nuevo: es la persistencia afectiva. Pedir "1 cosa difícil y 1 cosa bien" entrena una alternativa a la narración todo-o-nada del self, y valida que mañana puede ser otro clima. Esa frase final es psicoeducación explícita: la inestabilidad afectiva es real, y también es temporal.
+Para alguien con TLP, reconocer que un día intenso puede cerrarse con un poco de compasión es el contrapunto del vacío de la mañana frente al espejo: el arco va de "no sé quién soy" a "puedo observarme sin condenarme".
+
+Criterios: DSM-5 inestabilidad afectiva (6) como persistencia/rumiación; identidad (3) como relato del día. TDC: mindfulness no juzgador; lo opuesto a la vergüenza = una auto-compasión mínima.
+
+
+------------------------------------------------------------------------------
+RESUMEN DE OUTCOMES
+------------------------------------------------------------------------------
+Evento     Opción                         Skill            Outcome (resumen)
+Espejo     Forzar sonrisa                 STOP             Máscara que pesa / con STOP: nombrás el vacío y salís con más aire.
+Espejo     Nombrar "difuso/a"             —                Baja la presión; no lo arregla todo, pero ya no estás solo/a con la niebla.
+Mensaje    Spamear el chat                TIPP             Urgencia + vergüenza; era una reunión. Con TIPP esperás y no incendias.
+Mensaje    Esperar                        —                Cuesta, el cuerpo sigue en alarma, pero el silencio no era abandono.
+Café       Cortar el vínculo              Acción opuesta   Vacío y "¿exageré?". Con skill: reagendar; hay espacio para reparar.
+Café       Decepción sin incendiar        —                Duele igual; el puente no se quema.
+Puerta     Abrir                          —                Era el delivery. El cuerpo tarda en bajar.
+Puerta     No abrir                       STOP             Queda la duda. Con STOP observás el miedo y podés chequear después.
+Urgencia   Actuar el impulso              TIPP             Descarga -> culpa. Con TIPP la ola no te arrastra igual.
+Urgencia   Surfear 10 min                 STOP             Duele y baja. Con STOP: la emoción es clima, no verdad absoluta.
+Feedback   Hundirse                       Acción opuesta   El feedback se vuelve sentencia. Con skill: pedís qué priorizar.
+Feedback   Pedir un ejemplo               —                Duele, pero el diálogo vuelve a lo concreto.
+Noche      Rumiar                         —                La noche agranda los fantasmas; el día se ve peor de lo que fue.
+Noche      1 difícil + 1 bien             STOP             Claridad, no negación. Con STOP: cierre con un poco de compasión.
+
+
+ARCO DEL DÍA
+============
+Mañana: quién soy (espejo) y ¿me dejan? (mensaje).
+Mediodía: el otro se vuelve todo o nada (café) y el mundo ambiguo sigue sonando (puerta).
+Tarde: la emoción ya no necesita al otro (ola) y el valor propio se parte con un comentario (trabajo).
+Noche: se decide si el día fue solo lo malo o también lo que se cuidó.
+
+Ese arco es intencional: de la identidad al abandono, del splitting a la crisis endógena, y de vuelta a una identidad un poco más capaz de observarse. Las herramientas se repiten a propósito (STOP tres veces, TIPP dos, acción opuesta dos) para que se aprendan por uso, no por glosario.

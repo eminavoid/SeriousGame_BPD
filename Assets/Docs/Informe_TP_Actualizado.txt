@@ -1,0 +1,167 @@
+FACULTAD DE INGENIERÍA Y CIENCIAS EXACTAS
+Universidad Argentina de la Empresa (UADE)
+
+Materia: _______________________________
+Cátedra / Comisión: _____________________
+Profesor/a: _____________________________
+Fecha: _________________________________
+
+Integrantes:
+- _____________________________________
+- _____________________________________
+- _____________________________________
+- _____________________________________
+
+Título:
+Un Día Con Emociones — TLP
+
+Subtítulo:
+Propuesta de serious game psicoeducativo
+
+
+────────────────────────────────────────
+Introducción
+────────────────────────────────────────
+
+El Trastorno Límite de la Personalidad (TLP) se caracteriza por emociones muy intensas, miedo al abandono, impulsividad e inestabilidad en la imagen de sí y en las relaciones. Aunque existen tratamientos con evidencia, especialmente la Terapia Dialéctico Conductual (TDC) y aportes de la Terapia Cognitivo Conductual (TCC), muchas personas conocen poco el trastorno o solo lo ven a través de estigmas (“drama”, “manipulación”), y las habilidades de afrontamiento suelen enseñarse en formatos poco atractivos o de difícil acceso.
+
+Este trabajo propone un serious game en primera persona que simula un día cotidiano con situaciones emocionalmente desafiantes. El objetivo no es diagnosticar ni reemplazar terapia, sino psicoeducar: que la persona entienda qué es el TLP, reconozca dificultades asociadas y practique habilidades concretas (STOP, TIPP y Acción Opuesta) en un entorno seguro, con feedback inmediato.
+
+Objetivos
+
+Objetivo general
+Facilitar la comprensión psicoeducativa del Trastorno Límite de la Personalidad (TLP) y la práctica de habilidades de regulación emocional inspiradas en la Terapia Dialéctico Conductual (TDC) y principios de la Terapia Cognitivo Conductual (TCC), mediante un serious game que simula situaciones cotidianas emocionalmente intensas. El juego está pensado tanto para personas que viven con TLP como para quienes conviven con alguien que lo tiene (familiares, amigos u otras personas cercanas), y para quienes desean aprender más sobre el tema.
+
+Objetivos específicos
+1. Lograr que, tras jugar, al menos el 70% de los usuarios de una prueba piloto pueda reconocer qué es el TLP y distinguir al menos 3 dificultades asociadas (por ejemplo: desregulación emocional, impulsividad e inestabilidad en las relaciones), medidas con un cuestionario post-juego.
+
+2. Permitir que los jugadores aprendan y diferencien al menos 3 habilidades inspiradas en TDC/TCC (STOP, TIPP y Acción Opuesta), de modo que puedan nombrarlas y explicar para qué sirven luego de la experiencia lúdica.
+
+3. Ayudar a que la persona, frente a un escenario emocionalmente intenso del juego, elija y aplique una habilidad adecuada en al menos el 60% de las situaciones planteadas, recibiendo feedback inmediato sobre el efecto de esa elección en su estado emocional simulado.
+
+4. Fomentar que los usuarios comprendan que estas herramientas sirven para autorregularse y cuidar su bienestar emocional en la vida diaria, y que al menos el 80% de la muestra piloto indique, en una encuesta breve, que el juego les ayudó a entender mejor cómo manejar emociones intensas y/o a conocer mejor el TLP.
+
+5. Concientizar a los jugadores de que el juego es una herramienta psicoeducativa de apoyo, no un diagnóstico ni un reemplazo de terapia, de forma que el 100% de los participantes reciba y reconozca al cierre un mensaje claro de límites del juego y recursos de ayuda.
+
+Relevancia del tema
+• El TLP suele malinterpretarse; la psicoeducación reduce estigma y mejora la comprensión.
+• La TDC enseña habilidades concretas, pero practicarlas “en frío” es distinto a practicarlas en un contexto emocional simulado.
+• Los serious games y la gamificación pueden subir la motivación y el engagement en tareas de salud mental (p. ej. tareas cognitivas gamificadas y apps con contenido TDC).
+• Hay demanda de herramientas digitales de apoyo, aunque la evidencia de apps como tratamiento autónomo sigue siendo mixta: por eso este proyecto se plantea como complemento educativo, no como terapia.
+
+Glosario
+• TLP / BPD: Trastorno Límite de la Personalidad (Borderline Personality Disorder). Implica emociones muy intensas, miedo fuerte al abandono, relaciones que oscilan e, a veces, una sensación inestable de identidad. No es “drama” ni manipulación: es un patrón de sufrimiento real.
+• TCC: Terapia Cognitivo Conductual. Enfoque que trabaja la relación entre pensamientos, emociones y conductas para generar cambios más adaptativos.
+• TDC / DBT: Terapia Dialéctico Conductual (Dialectical Behavior Therapy). Tratamiento con evidencia para el TLP que entrena habilidades de mindfulness, regulación emocional, tolerancia al malestar y efectividad interpersonal.
+• Psicoeducación: Proceso de enseñar información clara y útil sobre un tema de salud mental para mejorar comprensión, reducir estigma y favorecer el uso de herramientas de afrontamiento. No reemplaza un tratamiento profesional.
+• Serious game: Videojuego cuyo propósito principal no es solo entretener, sino formar, concientizar o entrenar habilidades.
+• Gamificación: Uso de elementos de diseño de juegos (feedback, progreso, desafíos) en contextos que no son de juego, para mejorar motivación y aprendizaje.
+• Desregulación emocional: Las emociones suben más rápido, más alto y bajan más lento; un estímulo pequeño puede sentirse enorme.
+• Miedo al abandono: Alarma intensa ante la idea de que alguien se aleja, tarda en responder o cancela un plan, aunque no necesariamente esté “abandonando” de verdad.
+• Pensamiento blanco / negro (todo o nada): Ver las relaciones o a uno mismo en extremos (“me ama / me odia”, “soy lo mejor / no valgo nada”), con poco espacio para el gris.
+• STOP: Habilidad TDC para frenar el impulso antes de actuar: Stop → dar un paso atrás → Observar → proceder con más claridad.
+• TIPP: Habilidad TDC de tolerancia al malestar para bajar la urgencia vía el cuerpo (Temperatura, ejercicio Intenso breve, respiración Pausada / Pareada, relajación muscular progresiva). En el juego se usa una versión simplificada (“TIPP lite”).
+• Acción opuesta / chequear hechos: Separar la emoción intensa de los hechos comprobables y, si la emoción no encaja del todo con la situación, actuar en dirección opuesta al impulso.
+• Medidor afectivo: Indicador del juego que representa el estado emocional simulado del personaje y cambia según decisiones y uso de habilidades.
+• Debrief: Cierre reflexivo al terminar la experiencia, donde se recapitula lo aprendido y se refuerzan los límites del juego (psicoeducación, no terapia).
+
+
+────────────────────────────────────────
+Antecedentes
+────────────────────────────────────────
+
+Gamificación de tareas cognitivas y TLP
+Barakat et al. (2025) evaluaron una versión gamificada de la stop-signal task (desarrollada en Unity) en personas con TLP y controles. La gamificación busca mantener la validez de la medición y mejorar el engagement en poblaciones con baja tolerancia a la frustración.
+Fuente: https://www.nature.com/articles/s41598-025-30255-3
+
+Friehs et al. (2020) demostraron que gamificar la misma tarea aumenta disfrute y flujo sin invalidar la medida.
+Fuente: https://games.jmir.org/2020/3/e17810/
+
+Serious games y mentalización
+Derks et al. desarrollaron el serious game You & I para entrenar mentalización y regulación del estrés (protocolo RCT y estudios posteriores). Aunque el foco es discapacidad intelectual leve a borderline, aporta un modelo de diseño de serious game para habilidades abstractas.
+Fuente: https://link.springer.com/article/10.1186/s13063-019-3608-9
+
+Apps e intervenciones digitales con contenido TDC / TLP
+Heider et al. (2022) estudiaron cualitativamente una app móvil con contenido de TDC en jóvenes con TLP, explorando usabilidad y percepción respecto de ideación suicida y autolesión.
+Fuente: https://www.mdpi.com/1660-4601/19/2/701
+
+Ilagan, Wilks et al. (2020) hicieron un meta-análisis de apps orientadas a síntomas del TLP: la evidencia de eficacia como tratamiento aún es limitada e inconsistente. Eso refuerza plantear nuestro juego como psicoeducación.
+Fuente: https://doi.org/10.1186/s40479-020-00127-5
+
+Revisiones posteriores sobre tecnologías digitales e intervenciones digitales para síntomas de TLP (p. ej. PMC 2022; JMIR 2024) coinciden en que hay potencial, pero se necesita más investigación y diseño cuidadoso.
+
+Ejemplos de diseño lúdico de habilidades TDC
+Proyectos educativos como Distress Arcade (habilidades TIPP) y Chain Detective (análisis en cadena) muestran cómo traducir skills de TDC a mini-juegos. No reemplazan terapia; sirven de referencia de mecánicas.
+Fuentes: https://psychkit.org/distress-arcade/ — https://psychkit.org/chain-detective/
+
+También existen apps clínicas o de apoyo (p. ej. DBT Coach, em.) y propuestas comerciales de juegos terapéuticos para TLP, que confirman el interés del área, aunque con distintos niveles de evidencia.
+
+Síntesis
+Los antecedentes muestran que:
+1. la gamificación puede mejorar engagement en tareas de salud mental;
+2. ya hay serious games y apps con TDC/mentalización;
+3. la evidencia de “cura por app” es mixta.
+
+Nuestra propuesta se diferencia al combinar psicoeducación sobre el TLP + práctica de habilidades TDC/TCC dentro de un día narrativo cotidiano en Unity, con énfasis en seguridad y límites claros del producto.
+
+
+────────────────────────────────────────
+Descripción
+Especificación del producto a desarrollar
+────────────────────────────────────────
+
+Concepto
+Nombre de trabajo: Un Día Con Emociones — TLP
+Tipo: Serious game / simulación narrativa educativa
+Motor: Unity (PC, Windows)
+Perspectiva: primera persona, exploración en un entorno doméstico
+Público objetivo: personas a partir de los 16 años con algo de experiencia en juegos de PC que quieran aprender sobre el TLP y/o practicar habilidades de regulación emocional. Incluye a quienes tienen TLP, a quienes conviven o están cerca de alguien que lo tiene (familiares, amigos), y a quienes se acercan al tema por interés formativo o práctica personal.
+Propósito: educar y practicar habilidades; no diagnosticar ni sustituir tratamiento profesional
+
+Core fantasy
+El jugador vive un día ordinario en el que las emociones internas suben “como una marea”. No hay respuestas perfectas: la meta es notar lo que pasa y probar herramientas de afrontamiento.
+
+Mecánicas principales
+• Exploración e interacción en la casa (WASD, mouse, tecla de interacción).
+• Eventos narrativos por bloques del día (mañana, mediodía, tarde, noche).
+• Medidor afectivo (estado emocional simulado) que sube/baja según decisiones y skills.
+• Habilidades jugables (inspiradas en TDC/TCC):
+  - STOP — frenar el impulso antes de actuar
+  - TIPP (lite) — bajar la urgencia vía cuerpo (temperatura, ejercicio breve, respiración)
+  - Acción opuesta / chequear hechos — separar emoción de hechos y actuar distinto al impulso
+• Glosario psicoeducativo (qué es el TLP, desregulación, miedo al abandono, pensamiento blanco/negro).
+• Seguridad: aviso de contenido, debrief al cierre y recursos de crisis.
+
+Contenido (MVP)
+Ejemplos de situaciones del día:
+
+Momento     | Situación                                              | Skill sugerida
+Mañana      | Vacío / identidad incierta frente al espejo            | STOP
+Mañana      | Mensaje visto sin respuesta (alarma de abandono)       | TIPP
+Mediodía    | Amigo cancela → pensamiento todo-o-nada                | Acción opuesta
+Tarde       | Urgencia / impulsividad                                | TIPP / STOP
+Tarde       | Estrés laboral o social                                | STOP
+Noche       | Cierre del día + reflexión                             | Debrief
+
+Loop de juego
+1. Inicio / aviso de contenido
+2. Explorar el entorno
+3. Dispararse un evento emocional
+4. Elegir una reacción
+5. Opción de usar una habilidad
+6. Feedback (texto + cambio del medidor afectivo)
+7. Continuar el día → debrief y recursos
+
+Alcance y limitaciones
+Incluye: un día jugable, 3 skills, glosario, feedback afectivo, debrief.
+No incluye: diagnóstico, terapia online, seguimiento clínico, ni reemplazo de profesional de salud mental.
+Plataforma inicial: PC (build Windows).
+
+Cómo se relacionan producto y objetivos
+
+Objetivo del juego                         | Cómo lo aborda el producto
+Que sepan qué es el TLP                    | Glosario + situaciones que ilustran dificultades
+Que aprendan TDC/TCC                       | Skills STOP, TIPP, Acción opuesta
+Que practiquen en el momento               | Eventos + feedback del medidor
+Que sientan utilidad                       | Encuesta / percepción post-juego
+Que entiendan los límites                  | Mensajes de seguridad + debrief
