@@ -33,7 +33,8 @@ MAPA RÁPIDO
 4  Puerta        Señal ambigua (sistema cebado)   Hipervigilancia de abandono     STOP
 5  Urgencia      Ola sin causa + ganas de descargar Desregulación, impulsividad   TIPP / STOP
 6  Feedback      Crítica leve = "no sirvo"        Identidad, blanco/negro         Acción opuesta
-7  Noche         Rumiación que reescribe el día   Persistencia afectiva           STOP
+7  Pareja        "Hablé con un ex", casual        Abandono, blanco/negro          Acción opuesta / TIPP
+8  Noche         Rumiación que reescribe el día   Persistencia afectiva           STOP
 
 Nota: psicoeducación lúdica, no terapia. Los estímulos están suavizados. No hay autolesión ni suicidio.
 
@@ -300,7 +301,64 @@ Criterios: DSM-5 identidad (3) y polarización sobre el self. Procesos: vergüen
 
 
 ------------------------------------------------------------------------------
-7. NOCHE — REVISAR EL DÍA
+7. TARDE — HABLÓ CON UN EX
+------------------------------------------------------------------------------
+Hora: 19:42
+Ancla: sillón            Disparo: Push (la pareja lo cuenta en la casa; se interactúa con el sillón)
+Temas: miedo al abandono · pensamiento blanco/negro
+Skill recomendada: Acción opuesta / chequear hechos — TIPP si la ansiedad es física
+Id: tarde_pareja
+Validado por Psicología.
+
+QUÉ PASA
+Tu pareja cuenta, de forma casual, que hoy habló con un ex. En la cabeza aparece: "me va a dejar por esa persona" o "seguro me está mintiendo, no puedo confiar".
+
+El hecho es chico y además fue contado, no descubierto. Los dos pensamientos arman una traición que nadie dijo. El impulso es reclamar, pedir el celular o alejarse. Ninguno de esos pensamientos se apoya en un hecho.
+
+Al entrar:     Afecto -24 · Impulsividad +22 · Claridad -16
+Si se pospone: Afecto -4 · Impulsividad +5 · Claridad -4
+Pensamiento:   "Tu pareja cuenta el día. Nombró a un ex. El pecho ya armó una historia."
+Si se evita:   "La frase sigue en la mesa. Irte al otro cuarto no apaga la historia."
+
+OPCIÓN 1 — Reclamarle: "¿me vas a dejar por esa persona?"
+  Medidor: Afecto -18 · Impulsividad +16 · Claridad -22
+  Ofrece herramienta: SÍ — Acción opuesta / chequear hechos
+  Outcome sin tool: El reclamo convierte un comentario en una pelea. Después queda la duda: ¿y si no había nada?
+  Outcome con tool: Hechos: te contó que habló con un ex. No dijo que se va, ni te lo ocultó. Acción opuesta al reclamo: "gracias por decírmelo". El miedo sigue, pero no lo usás de prueba.
+  Bonus al usar la skill: Afecto +18 · Impulsividad -16 · Claridad +22
+                      + efecto de Acción opuesta: Afecto +5 · Impulsividad -15 · Claridad +20
+
+OPCIÓN 2 — Pedirle el celular. El pecho no afloja y necesitás saber ya
+  Medidor: Afecto -12 · Impulsividad +28 · Claridad -18
+  Ofrece herramienta: SÍ — TIPP (lite)
+  Outcome sin tool: Revisás el celular. Hay un segundo de alivio, y la confianza queda rota. No aparece la prueba que buscabas.
+  Outcome con tool: TIPP baja el pecho lo suficiente para ver el hecho: te lo contó. No hace falta el celular. Cuando baja la urgencia, podés chequear en vez de controlar.
+  Bonus al usar la skill: Afecto +14 · Impulsividad -24 · Claridad +14
+                      + efecto de TIPP: Afecto +8 · Impulsividad -28 · Claridad +10
+
+OPCIÓN 3 — Quedarte en la charla: "¿y qué te contó?"
+  Medidor: Afecto +8 · Impulsividad -12 · Claridad +14
+  Ofrece herramienta: NO (ya es acción opuesta)
+  Outcome: Duele el pensamiento. Igual preguntás cómo le fue, sin investigar. El comentario sigue siendo un comentario.
+
+POR QUÉ ESA HERRAMIENTA
+Psicología la marcó así: Acción opuesta como principal, TIPP como segunda si viene con mucha ansiedad física.
+
+El error central es cognitivo. La pareja solo contó algo cotidiano. "Me va a dejar" y "me está mintiendo" no se apoyan en un hecho, así que corresponde chequear hechos y actuar distinto al impulso de reclamar, revisar el celular o alejarse. Por eso el reclamo ofrece Acción opuesta.
+
+Pedir el celular es el mismo impulso con el cuerpo ya en emergencia (hay que saber YA). Ahí chequear hechos llega tarde: primero TIPP, para que baje la urgencia, y después el hecho sigue siendo el mismo. Quedarse y preguntar "¿y qué te contó?" ya es la acción opuesta, por eso no abre herramienta.
+
+En el juego ninguna opción se rotula "incorrecta". El feedback muestra la consecuencia.
+
+POR QUÉ ESTE EVENTO COMO ESTÍMULO EN TLP
+El miedo al abandono y la desconfianza en la pareja son de lo más típico del TLP, y el día no tenía una escena de pareja explícita: el mensaje era "alguien importante" y el café era un amigo. Un ex nombrado al pasar es una señal chica con una lectura enorme. Eso es desregulación, no una traición escrita en los hechos.
+El estímulo se queda en el comentario. No hay pelea previa, no hay mensaje oculto, no hay ruptura. Para quien vive con TLP puede activar de verdad, por eso sigue siendo chico y se puede salir de la partida. Para quien es allegado, es la situación que suele leer desde afuera como "exageración".
+
+Criterios: DSM-5 abandono (1) y relaciones inestables / idealización-devaluación en clave de desconfianza (2). TDC: chequear hechos; acción opuesta al impulso de controlar; TIPP si la activación física no deja pensar.
+
+
+------------------------------------------------------------------------------
+8. NOCHE — REVISAR EL DÍA
 ------------------------------------------------------------------------------
 Hora: 21:12
 Ancla: cama              Disparo: Pull (acercarse a la cama; si no, se fuerza el cierre)
@@ -357,6 +415,9 @@ Urgencia   Actuar el impulso              TIPP             Descarga -> culpa. Co
 Urgencia   Surfear 10 min                 STOP             Duele y baja. Con STOP: la emoción es clima, no verdad absoluta.
 Feedback   Hundirse                       Acción opuesta   El feedback se vuelve sentencia. Con skill: pedís qué priorizar.
 Feedback   Pedir un ejemplo               —                Duele, pero el diálogo vuelve a lo concreto.
+Pareja     Reclamar                       Acción opuesta   El comentario se vuelve pelea. Con skill: te lo contó; no lo usás de prueba.
+Pareja     Pedir el celular               TIPP             Un segundo de alivio y la confianza rota. Con TIPP no hace falta el celular.
+Pareja     "¿y qué te contó?"             —                Duele, y el comentario sigue siendo un comentario.
 Noche      Rumiar                         —                La noche agranda los fantasmas; el día se ve peor de lo que fue.
 Noche      1 difícil + 1 bien             STOP             Claridad, no negación. Con STOP: cierre con un poco de compasión.
 
@@ -365,7 +426,7 @@ ARCO DEL DÍA
 ============
 Mañana: quién soy (espejo) y ¿me dejan? (mensaje).
 Mediodía: el otro se vuelve todo o nada (café) y el mundo ambiguo sigue sonando (puerta).
-Tarde: la emoción ya no necesita al otro (ola) y el valor propio se parte con un comentario (trabajo).
+Tarde: la emoción ya no necesita al otro (ola), el valor propio se parte con un comentario (trabajo), y la pareja nombra a un ex (hecho chico, historia grande).
 Noche: se decide si el día fue solo lo malo o también lo que se cuidó.
 
-Ese arco es intencional: de la identidad al abandono, del splitting a la crisis endógena, y de vuelta a una identidad un poco más capaz de observarse. Las herramientas se repiten a propósito (STOP tres veces, TIPP dos, acción opuesta dos) para que se aprendan por uso, no por glosario.
+Ese arco es intencional: de la identidad al abandono, del splitting a la crisis endógena, y de vuelta a una identidad un poco más capaz de observarse. Las herramientas se repiten a propósito (STOP tres veces, TIPP en el mensaje, la urgencia y el celular, acción opuesta en el café, el feedback y el reclamo) para que se aprendan por uso, no por glosario.

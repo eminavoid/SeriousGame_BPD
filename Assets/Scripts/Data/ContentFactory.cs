@@ -97,6 +97,7 @@ namespace SeriousGameBPD.Data
                 EventMediodiaAmistad(),
                 EventTardeUrgencia(),
                 EventTardeTrabajo(),
+                EventTardePareja(),
                 EventNocheCierre()
             };
         }
@@ -284,6 +285,54 @@ namespace SeriousGameBPD.Data
                 }
             };
             return BindWorld(e, WorldAnchorIds.Laptop, EventTriggerType.Push, true, new AffectDelta(-3, 4, -3));
+        }
+
+        static DayEvent EventTardePareja()
+        {
+            var e = ScriptableObject.CreateInstance<DayEvent>();
+            e.eventId = "tarde_pareja";
+            e.block = DayBlock.Tarde;
+            e.title = "Tarde — Habló con un ex";
+            e.body =
+                "Tu pareja cuenta, de forma casual, que hoy habló con un ex. " +
+                "En la cabeza aparece: 'me va a dejar por esa persona' o 'seguro me está mintiendo, no puedo confiar'. " +
+                "El comentario fue chico. La historia, no.";
+            e.tags = new List<EducationalTag> { EducationalTag.Abandono, EducationalTag.BlancoNegro };
+            e.enterDelta = new AffectDelta(-24, 22, -16);
+            e.recommendedSkill = SkillId.OppositeAction;
+            e.options = new List<EventOption>
+            {
+                new EventOption
+                {
+                    optionId = "accuse",
+                    label = "Reclamarle: '¿me vas a dejar por esa persona?'",
+                    delta = new AffectDelta(-18, 16, -22),
+                    requiresSkillOffer = true,
+                    suggestedSkill = SkillId.OppositeAction,
+                    outcomeWithoutSkill = "El reclamo convierte un comentario en una pelea. Después queda la duda: ¿y si no había nada?",
+                    outcomeWithSkill = "Hechos: te contó que habló con un ex. No dijo que se va, ni te lo ocultó. Acción opuesta al reclamo: 'gracias por decírmelo'. El miedo sigue, pero no lo usás de prueba.",
+                    skillBonusDelta = new AffectDelta(18, -16, 22)
+                },
+                new EventOption
+                {
+                    optionId = "phone",
+                    label = "Pedirle el celular. El pecho no afloja y necesitás saber ya",
+                    delta = new AffectDelta(-12, 28, -18),
+                    requiresSkillOffer = true,
+                    suggestedSkill = SkillId.Tipp,
+                    outcomeWithoutSkill = "Revisás el celular. Hay un segundo de alivio, y la confianza queda rota. No aparece la prueba que buscabas.",
+                    outcomeWithSkill = "TIPP baja el pecho lo suficiente para ver el hecho: te lo contó. No hace falta el celular. Cuando baja la urgencia, podés chequear en vez de controlar.",
+                    skillBonusDelta = new AffectDelta(14, -24, 14)
+                },
+                new EventOption
+                {
+                    optionId = "stay",
+                    label = "Quedarte en la charla: '¿y qué te contó?'",
+                    delta = new AffectDelta(8, -12, 14),
+                    outcomeWithoutSkill = "Duele el pensamiento. Igual preguntás cómo le fue, sin investigar. El comentario sigue siendo un comentario."
+                }
+            };
+            return BindWorld(e, WorldAnchorIds.Couch, EventTriggerType.Push, true, new AffectDelta(-4, 5, -4));
         }
 
         static DayEvent EventNocheCierre()

@@ -49,6 +49,7 @@ namespace SeriousGameBPD.World
             _beats.Add(new Beat { Event = ContentFactory.BuildDoorKnockEvent(), WaitSeconds = 6f, MaxDeferSeconds = 16f, ClockMinutes = 13.1f * 60f, CountsForDay = false });
             _beats.Add(new Beat { Event = Find("tarde_urgencia"), WaitSeconds = 8f, MaxDeferSeconds = 14f, ClockMinutes = 16.1f * 60f });
             _beats.Add(new Beat { Event = Find("tarde_feedback"), WaitSeconds = 7f, MaxDeferSeconds = 20f, ClockMinutes = 17.45f * 60f });
+            _beats.Add(new Beat { Event = Find("tarde_pareja"), WaitSeconds = 8f, MaxDeferSeconds = 18f, ClockMinutes = 19.7f * 60f });
             _beats.Add(new Beat { Event = Find("noche_cierre"), WaitSeconds = 12f, MaxDeferSeconds = 18f, ClockMinutes = 21.2f * 60f });
 
             foreach (var interactable in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
@@ -140,6 +141,10 @@ namespace SeriousGameBPD.World
                 _ctx.Thoughts?.Show("Una notificación en el notebook. 'esto podría mejorar'.");
                 if (_ctx.Laptop != null)
                     _ctx.Laptop.Prompt = "Abrir el mail / comentario";
+            }
+            else if (evt.worldAnchorId == WorldAnchorIds.Couch)
+            {
+                _ctx.Thoughts?.Show("Tu pareja cuenta el día. Nombró a un ex. El pecho ya armó una historia.");
             }
             else if (evt.worldAnchorId == WorldAnchorIds.Body)
             {
@@ -251,6 +256,8 @@ namespace SeriousGameBPD.World
                 return "Los golpes siguen. El pecho también.";
             if (evt.worldAnchorId == WorldAnchorIds.Laptop)
                 return "El comentario no se borra porque no lo abras.";
+            if (evt.worldAnchorId == WorldAnchorIds.Couch)
+                return "La frase sigue en la mesa. Irte al otro cuarto no apaga la historia.";
             return "Lo que no mirás igual está en el cuerpo.";
         }
 

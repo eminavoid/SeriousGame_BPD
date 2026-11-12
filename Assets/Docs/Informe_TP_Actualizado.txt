@@ -165,3 +165,5 @@ Que aprendan TDC/TCC                       | Skills STOP, TIPP, Acción opuesta
 Que practiquen en el momento               | Eventos + feedback del medidor
 Que sientan utilidad                       | Encuesta / percepción post-juego
 Que entiendan los límites                  | Mensajes de seguridad + debrief
+
+La versión completa, con hipótesis de diseño, marco, criterio de éxito y playtest por objetivo, está en Matriz_Congruencia.md (formato de la clase 8). El hallazgo queda pendiente del piloto.
