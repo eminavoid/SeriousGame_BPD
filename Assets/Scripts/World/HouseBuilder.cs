@@ -82,22 +82,36 @@ namespace SeriousGameBPD.World
             root.SetParent(parent, false);
             built.Root = root;
 
-            const float h = 2.65f;
-            Box("Floor", root, new Vector3(6.8f, -0.5f, 5.2f), new Vector3(14.2f, 1.0f, 11.0f), palette.Floor);
-            Box("Ceiling", root, new Vector3(6.8f, h + 0.08f, 5.2f), new Vector3(13.8f, 0.16f, 10.6f), palette.Ceiling);
+            const float h = 2.74f;
+            const float half = 0.08f;
+            // Piso y techo en L: el living no sigue hacia el noreste, donde no hay paredes.
+            Box("Floor", root, new Vector3(6.82f, -0.5f, 3.12f), new Vector3(14.04f, 1f, 6.64f), palette.Floor);
+            Box("FloorBath", root, new Vector3(2.2f, -0.5f, 8.35f), new Vector3(4.8f, 1f, 4.6f), palette.Floor);
+            Box("Ceiling", root, new Vector3(6.82f, 2.82f, 3.12f), new Vector3(14.04f, 0.2f, 6.64f), palette.Ceiling);
+            Box("CeilingBath", root, new Vector3(2.2f, 2.82f, 8.35f), new Vector3(4.8f, 0.2f, 4.6f), palette.Ceiling);
 
-            WallZ(root, 0f, 0f, 10.35f, h, palette.BedWall);
-            WallZ(root, 0f, 11.65f, 13.6f, h, palette.LiveWall);
-            WallZ(root, 6.5f, 5.2f, 13.6f, h, palette.LiveWall);
-            WallZ(root, 6.2f, 0f, 1.0f, h, palette.BathWall);
-            WallZ(root, 6.2f, 2.75f, 5.2f, h, palette.BathWall);
-            WallZ(root, 10.4f, 0f, 4.4f, h, palette.BathWall);
+            // Cada tramo entra en la pared perpendicular (half) y no deja una rendija en la esquina.
+            // El fondo del living y el del baño comparten z = 6.2, así no queda un escalón abierto.
+            WallZ(root, "WallSouthL", 0f, 0f, 10.35f, h, palette.BedWall, half, 0.04f);
+            WallZ(root, "WallSouthR", 0f, 11.65f, 13.6f, h, palette.LiveWall, 0.04f, half);
+            WallZ(root, "WallLivingNorth", 6.2f, 5.2f, 13.6f, h, palette.LiveWall, 0f, half);
+            WallZ(root, "WallBathSouthL", 6.2f, 0f, 1.2f, h, palette.BathWall, half, 0f);
+            WallZ(root, "WallBathSouthR", 6.2f, 2.2f, 5.2f, h, palette.BathWall, 0f, 0f);
+            WallZ(root, "WallBathNorth", 10.4f, 0f, 4.4f, h, palette.BathWall, half, half);
 
-            WallX(root, 0f, 0f, 10.4f, h, palette.BedWall);
-            WallX(root, 13.6f, 0f, 6.5f, h, palette.LiveWall);
-            WallX(root, 4.4f, 6.2f, 10.4f, h, palette.BathWall);
-            WallX(root, 5.2f, 0f, 2.0f, h, palette.LiveWall);
-            WallX(root, 5.2f, 4.25f, 6.2f, h, palette.LiveWall);
+            WallX(root, "WallWest", 0f, 0f, 10.4f, h, palette.BedWall, half, half);
+            WallX(root, "WallEast", 13.6f, 0f, 6.2f, h, palette.LiveWall, half, half);
+            WallX(root, "WallBathEast", 4.4f, 6.2f, 10.4f, h, palette.BathWall, half, half);
+            WallX(root, "WallPartitionS", 5.2f, 0f, 3.2f, h, palette.LiveWall, half, 0f);
+            WallX(root, "WallPartitionN", 5.2f, 4.3f, 6.2f, h, palette.LiveWall, 0f, half);
+
+            // Vanos interiores: marco hasta el techo, paso de un metro. No son paredes faltantes.
+            Box("BathDoorJambL", root, new Vector3(1.2f, h * 0.5f, 6.2f), new Vector3(0.1f, h, 0.22f), palette.BathWall);
+            Box("BathDoorJambR", root, new Vector3(2.2f, h * 0.5f, 6.2f), new Vector3(0.1f, h, 0.22f), palette.BathWall);
+            Box("BathDoorHeader", root, new Vector3(1.7f, 2.4f, 6.2f), new Vector3(1.16f, 0.68f, 0.22f), palette.BathWall);
+            Box("PassageJambS", root, new Vector3(5.2f, h * 0.5f, 3.2f), new Vector3(0.22f, h, 0.1f), palette.LiveWall);
+            Box("PassageJambN", root, new Vector3(5.2f, h * 0.5f, 4.3f), new Vector3(0.22f, h, 0.1f), palette.LiveWall);
+            Box("PassageHeader", root, new Vector3(5.2f, 2.4f, 3.75f), new Vector3(0.22f, 0.68f, 1.26f), palette.LiveWall);
 
             Box("Rug", root, new Vector3(7.4f, 0.015f, 4.15f), new Vector3(3.4f, 0.03f, 2.5f), palette.Rug);
 
@@ -205,9 +219,9 @@ namespace SeriousGameBPD.World
                 "Luz, un resto de comida, nada que arregle el día. Igual es algo concreto.");
 
             // Hueco de la pared sur: x 10.35–11.65, plano z = 0. El marco y la hoja lo tapan.
-            Box("DoorJambL", root, new Vector3(10.42f, 1.06f, 0f), new Vector3(0.14f, 2.12f, 0.2f), palette.WoodDark);
-            Box("DoorJambR", root, new Vector3(11.58f, 1.06f, 0f), new Vector3(0.14f, 2.12f, 0.2f), palette.WoodDark);
-            Box("DoorHeader", root, new Vector3(11f, 2.36f, 0f), new Vector3(1.36f, 0.58f, 0.2f), palette.WoodDark);
+            Box("DoorJambL", root, new Vector3(10.42f, h * 0.5f, 0f), new Vector3(0.16f, h, 0.22f), palette.WoodDark);
+            Box("DoorJambR", root, new Vector3(11.58f, h * 0.5f, 0f), new Vector3(0.16f, h, 0.22f), palette.WoodDark);
+            Box("DoorHeader", root, new Vector3(11f, 2.4f, 0f), new Vector3(1.42f, 0.68f, 0.22f), palette.WoodDark);
 
             var door = Prop("FrontDoor", root, new Vector3(11f, 0f, 0f));
             Piece("Leaf", door.transform, new Vector3(0f, 1.05f, 0f), new Vector3(1.08f, 2.08f, 0.055f), palette.Wood);
@@ -219,7 +233,7 @@ namespace SeriousGameBPD.World
             built.Door = MakeInteractable(door, WorldAnchorIds.Door, "Mirar la puerta",
                 "Nadie. Solo la madera y tu alarma.");
 
-            var lamp = Prop("CeilingLamp", root, new Vector3(6.4f, 2.65f, 4.2f));
+            var lamp = Prop("CeilingLamp", root, new Vector3(6.4f, 2.7f, 4.2f));
             Piece("Cord", lamp.transform, new Vector3(0f, -0.14f, 0f), new Vector3(0.02f, 0.28f, 0.02f), palette.Dark);
             Piece("Shade", lamp.transform, new Vector3(0f, -0.32f, 0f), new Vector3(0.42f, 0.14f, 0.42f), palette.Linen);
 
@@ -250,20 +264,22 @@ namespace SeriousGameBPD.World
             Piece("Leg", parent, pos, new Vector3(0.08f, 0.72f, 0.08f), mat);
         }
 
-        static void WallX(Transform parent, float x, float z0, float z1, float height, Material mat)
+        static void WallX(Transform parent, string name, float x, float z0, float z1, float height, Material mat, float pad0, float pad1)
         {
-            float z = (z0 + z1) * 0.5f;
-            float len = Mathf.Abs(z1 - z0);
+            float a = z0 - pad0;
+            float b = z1 + pad1;
+            float len = b - a;
             if (len < 0.05f) return;
-            Box($"WallX_{x:0.0}_{z0:0.0}", parent, new Vector3(x, height * 0.5f, z), new Vector3(0.16f, height, len), mat);
+            Box(name, parent, new Vector3(x, height * 0.5f, (a + b) * 0.5f), new Vector3(0.16f, height, len), mat);
         }
 
-        static void WallZ(Transform parent, float z, float x0, float x1, float height, Material mat)
+        static void WallZ(Transform parent, string name, float z, float x0, float x1, float height, Material mat, float pad0, float pad1)
         {
-            float x = (x0 + x1) * 0.5f;
-            float len = Mathf.Abs(x1 - x0);
+            float a = x0 - pad0;
+            float b = x1 + pad1;
+            float len = b - a;
             if (len < 0.05f) return;
-            Box($"WallZ_{z:0.0}_{x0:0.0}", parent, new Vector3(x, height * 0.5f, z), new Vector3(len, height, 0.16f), mat);
+            Box(name, parent, new Vector3((a + b) * 0.5f, height * 0.5f, z), new Vector3(len, height, 0.16f), mat);
         }
 
         static GameObject Prop(string name, Transform parent, Vector3 pos)
