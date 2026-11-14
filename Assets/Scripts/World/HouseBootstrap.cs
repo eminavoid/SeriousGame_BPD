@@ -78,11 +78,18 @@ namespace SeriousGameBPD.World
                     cam.enabled = false;
             }
 
-            var sceneLight = FindFirstObjectByType<Light>();
-            if (sceneLight != null)
-                sceneLight.enabled = false;
+            var layout = FindFirstObjectByType<HouseLayout>();
+            if (layout == null || layout.Phone == null || layout.Door == null)
+            {
+                Debug.LogError("House: falta el prefab Apartment en la escena (HouseLayout, celular o puerta). Menú SeriousGame BPD → Bake Apartment Prefab.");
+                return;
+            }
 
-            var built = HouseBuilder.Build(transform);
+            foreach (var light in FindObjectsByType<Light>(FindObjectsSortMode.None))
+            {
+                if (!light.transform.IsChildOf(layout.transform))
+                    light.enabled = false;
+            }
 
             var playerGo = new GameObject("Player");
             var fps = playerGo.AddComponent<FPSController>();
@@ -96,21 +103,25 @@ namespace SeriousGameBPD.World
                     camGo.AddComponent<UniversalAdditionalCameraData>();
             }
 
-            fps.Possess(eye, built.Spawn, built.SpawnYaw);
+            fps.Possess(eye, layout.SpawnPosition, layout.SpawnYaw);
 
-            var phone = built.PhoneVisual.gameObject.AddComponent<PhoneController>();
-            phone.Setup(built.Phone);
+            var phone = layout.Phone.GetComponent<PhoneController>();
+            if (phone == null)
+                phone = layout.Phone.gameObject.AddComponent<PhoneController>();
+            phone.Setup(layout.Phone);
 
-            var door = built.DoorVisual.gameObject.AddComponent<DoorController>();
-            door.Setup(built.Door);
+            var door = layout.Door.GetComponent<DoorController>();
+            if (door == null)
+                door = layout.Door.gameObject.AddComponent<DoorController>();
+            door.Setup(layout.Door);
 
             _ctx = gameObject.AddComponent<HouseContext>();
             _ctx.Clock = gameObject.AddComponent<WorldClock>();
             _ctx.Player = fps;
             _ctx.Phone = phone;
             _ctx.Door = door;
-            _ctx.Sun = built.Sun;
-            _ctx.Laptop = built.Laptop;
+            _ctx.Sun = layout.Sun;
+            _ctx.Laptop = layout.Laptop;
             _ctx.Skills = new SkillController(GameSession.Instance.DayPlan.skills);
         }
 
