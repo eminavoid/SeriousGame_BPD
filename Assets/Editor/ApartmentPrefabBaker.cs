@@ -12,6 +12,7 @@ namespace SeriousGameBPD.EditorTools
     {
         const string PrefabPath = "Assets/Prefabs/Apartment.prefab";
         const string MaterialFolder = "Assets/Materials/Apartment";
+        const string ModelFolder = "Assets/Models/Apartment";
         const string HouseScenePath = "Assets/Scenes/House.unity";
 
         static bool _started;
@@ -69,7 +70,7 @@ namespace SeriousGameBPD.EditorTools
             bool exists = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null;
             if (exists && !EditorUtility.DisplayDialog(
                     "Hornear departamento",
-                    "Esto vuelve a crear Apartment.prefab con la geometría del código y reemplaza la instancia en la escena House. Los materiales que ya recoloriste se conservan. Los movimientos que hayas hecho en el prefab se pierden.",
+                    "Esto vuelve a armar Apartment.prefab con los FBX de Assets/Models/Apartment y reemplaza la instancia en la escena House. Los materiales de los modelos se conservan. Los movimientos que hayas hecho en el prefab se pierden.",
                     "Hornear de nuevo",
                     "Cancelar"))
                 return;
@@ -88,7 +89,7 @@ namespace SeriousGameBPD.EditorTools
                 PlaceInHouseScene(overwritePrefab);
 
             AssetDatabase.SaveAssets();
-            Debug.Log("SeriousGame BPD: Apartment.prefab está en la escena House. Mové los cubos desde la Hierarchy.");
+            Debug.Log("SeriousGame BPD: Apartment.prefab está en la escena House, con los FBX del departamento.");
         }
 
         static void EnsureFolders()
@@ -99,17 +100,23 @@ namespace SeriousGameBPD.EditorTools
                 AssetDatabase.CreateFolder("Assets/Materials", "Apartment");
             if (!AssetDatabase.IsValidFolder("Assets/Prefabs"))
                 AssetDatabase.CreateFolder("Assets", "Prefabs");
+            if (!AssetDatabase.IsValidFolder("Assets/Models"))
+                AssetDatabase.CreateFolder("Assets", "Models");
+            if (!AssetDatabase.IsValidFolder(ModelFolder))
+                AssetDatabase.CreateFolder("Assets/Models", "Apartment");
         }
 
         static void CreatePrefab()
         {
+            ReimportModels();
             var palette = HouseBuilder.CreatePalette(CreateMaterialAsset);
+            var models = LoadModels();
             var preview = EditorSceneManager.NewPreviewScene();
             try
             {
                 var temp = new GameObject("BakeRoot");
                 EditorSceneManager.MoveGameObjectToScene(temp, preview);
-                var built = HouseBuilder.Build(temp.transform, palette);
+                var built = HouseBuilder.Build(temp.transform, palette, models);
 
                 var spawn = new GameObject("Spawn");
                 spawn.transform.SetParent(built.Root, false);
@@ -140,6 +147,60 @@ namespace SeriousGameBPD.EditorTools
             }
 
             AssetDatabase.ImportAsset(PrefabPath);
+        }
+
+        static void ReimportModels()
+        {
+            var folder = Path.Combine(Application.dataPath, "Models", "Apartment");
+            if (!Directory.Exists(folder))
+                throw new System.InvalidOperationException("Falta la carpeta " + ModelFolder);
+
+            foreach (var full in Directory.GetFiles(folder, "*.fbx"))
+            {
+                var assetPath = ModelFolder + "/" + Path.GetFileName(full);
+                AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
+            }
+        }
+
+        static HouseBuilder.ModelLibrary LoadModels()
+        {
+            GameObject Load(string name)
+            {
+                var path = $"{ModelFolder}/{name}.fbx";
+                var model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (model == null)
+                    Debug.LogError("No se pudo cargar " + path);
+                return model;
+            }
+
+            var models = new HouseBuilder.ModelLibrary
+            {
+                Paredes = Load("Paredes"),
+                Alfombra = Load("Alfombra"),
+                Banera = Load("Banera"),
+                Cafetera = Load("Cafetera"),
+                Cama = Load("Cama"),
+                Celular = Load("Celular"),
+                Comoda = Load("Comoda"),
+                Cuaderno = Load("Cuaderno"),
+                Espejo = Load("Espejo"),
+                Heladera = Load("Heladera"),
+                Inodoro = Load("Inodoro"),
+                Lavamanos = Load("Lavamanos"),
+                Mesa = Load("Mesa"),
+                Mesada = Load("Mesada"),
+                MesaDeLuz = Load("MesaDeLuz"),
+                Notebook = Load("Notebook"),
+                Puerta = Load("Puerta"),
+                Sillon = Load("Sillon"),
+                Taza = Load("Taza"),
+                Ventana = Load("Ventana"),
+            };
+
+            if (models.Paredes == null || models.Cama == null || models.Celular == null || models.Puerta == null)
+                throw new System.InvalidOperationException("Faltan FBX del departamento en " + ModelFolder);
+
+            return models;
         }
 
         static Texture2D _wood;

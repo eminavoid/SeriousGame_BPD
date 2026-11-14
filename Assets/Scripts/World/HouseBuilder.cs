@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SeriousGameBPD.Data;
 using UnityEngine;
 
@@ -29,6 +30,34 @@ namespace SeriousGameBPD.World
             public Material Phone;
             public Material Screen;
             public Material Couch;
+        }
+
+        /// <summary>
+        /// FBX del departamento. Cada archivo trae la posición que le dio el modelado
+        /// (el origen del prefab queda en el origen de la casa).
+        /// </summary>
+        public class ModelLibrary
+        {
+            public GameObject Paredes;
+            public GameObject Alfombra;
+            public GameObject Banera;
+            public GameObject Cafetera;
+            public GameObject Cama;
+            public GameObject Celular;
+            public GameObject Comoda;
+            public GameObject Cuaderno;
+            public GameObject Espejo;
+            public GameObject Heladera;
+            public GameObject Inodoro;
+            public GameObject Lavamanos;
+            public GameObject Mesa;
+            public GameObject Mesada;
+            public GameObject MesaDeLuz;
+            public GameObject Notebook;
+            public GameObject Puerta;
+            public GameObject Sillon;
+            public GameObject Taza;
+            public GameObject Ventana;
         }
 
         public class BuiltHouse
@@ -75,8 +104,11 @@ namespace SeriousGameBPD.World
             };
         }
 
-        public static BuiltHouse Build(Transform parent, Palette palette)
+        public static BuiltHouse Build(Transform parent, Palette palette, ModelLibrary models = null)
         {
+            if (models != null && models.Paredes != null)
+                return BuildFromModels(parent, palette, models);
+
             var built = new BuiltHouse();
             var root = new GameObject("Apartment").transform;
             root.SetParent(parent, false);
@@ -257,6 +289,342 @@ namespace SeriousGameBPD.World
             fill.color = new Color(1f, 0.9f, 0.75f);
 
             return built;
+        }
+
+        static BuiltHouse BuildFromModels(Transform parent, Palette palette, ModelLibrary models)
+        {
+            var built = new BuiltHouse();
+            var root = new GameObject("Apartment").transform;
+            root.SetParent(parent, false);
+            built.Root = root;
+
+            var placed = new List<GameObject>();
+            var factor = 1f;
+
+            GameObject Spawn(GameObject prefab, string name)
+            {
+                if (prefab == null)
+                    return null;
+
+                var go = UnityEngine.Object.Instantiate(prefab, root, false);
+                go.name = name;
+                go.transform.localScale = Vector3.one * factor;
+                placed.Add(go);
+                return go;
+            }
+
+            var paredes = Spawn(models.Paredes, "Paredes");
+            factor = ShellScale(paredes);
+            if (!Mathf.Approximately(factor, 1f))
+            {
+                foreach (var go in placed)
+                    go.transform.localScale = Vector3.one * factor;
+            }
+
+            var cama = Spawn(models.Cama, "Bed");
+            var mesaDeLuz = Spawn(models.MesaDeLuz, "Nightstand");
+            var celular = Spawn(models.Celular, "Phone");
+            var ventana = Spawn(models.Ventana, "Window");
+            var espejo = Spawn(models.Espejo, "Mirror");
+            var lavamanos = Spawn(models.Lavamanos, "Sink");
+            var banera = Spawn(models.Banera, "Bathtub");
+            var inodoro = Spawn(models.Inodoro, "Toilet");
+            var comoda = Spawn(models.Comoda, "Dresser");
+            var sillon = Spawn(models.Sillon, "Couch");
+            var mesa = Spawn(models.Mesa, "Table");
+            var notebook = Spawn(models.Notebook, "Laptop");
+            var cuaderno = Spawn(models.Cuaderno, "Journal");
+            var mesada = Spawn(models.Mesada, "Counter");
+            var cafetera = Spawn(models.Cafetera, "Coffee");
+            var taza = Spawn(models.Taza, "Cup");
+            var heladera = Spawn(models.Heladera, "Fridge");
+            var puerta = Spawn(models.Puerta, "FrontDoor");
+            Spawn(models.Alfombra, "Rug");
+
+            AlignToHouse(placed, paredes);
+
+            if (paredes != null)
+                CollideShell(paredes);
+
+            // El FBX trae piso y muros, no el techo. El cielo no se ve desde la calle.
+            Box("Ceiling", root, new Vector3(6.9f, 2.76f, 3.2f), new Vector3(14.2f, 0.18f, 6.8f), palette.Ceiling);
+            Box("CeilingBath", root, new Vector3(2.2f, 2.76f, 8.3f), new Vector3(4.8f, 0.18f, 4.6f), palette.Ceiling);
+
+            built.Bed = Bind(cama, WorldAnchorIds.Bed, "Acostarte / cerrar el día",
+                "El colchón espera. Todavía no es de noche.", 0f);
+            Block(mesaDeLuz);
+            built.PhoneVisual = celular != null ? celular.transform : null;
+            built.Phone = Bind(celular, WorldAnchorIds.Phone, "Mirar el celular",
+                "La pantalla está quieta. Por ahora.", 0.34f);
+            built.Window = Bind(ventana, WorldAnchorIds.Window, "Mirar por la ventana",
+                "Afuera el día ya empezó sin vos. Autos, alguien riendo, un perro. El mundo no espera.", 0.2f);
+            built.Mirror = Bind(espejo, WorldAnchorIds.Mirror, "Mirarte en el espejo",
+                "Por un segundo no sabés bien quién sos hoy.", 0.2f);
+            built.Sink = Bind(lavamanos, WorldAnchorIds.Sink, "Agua fría (TIPP)",
+                "Agua fría en las muñecas. El cuerpo puede bajar un cambio.", 0.15f);
+            Block(banera);
+            Block(inodoro);
+            Block(comoda);
+            built.Couch = Bind(sillon, WorldAnchorIds.Couch, "Sentarte un rato",
+                "El sillón invita a desaparecer un rato. A veces ayuda. A veces es un pozo.", 0f);
+            Block(mesa);
+            built.Laptop = Bind(notebook, WorldAnchorIds.Laptop, "Abrir el notebook",
+                "La tapa cerrada. El trabajo puede esperar un poco.", 0.28f);
+            Block(cuaderno);
+            Block(mesada);
+            built.Coffee = Bind(cafetera, WorldAnchorIds.Coffee, "Hacer café",
+                "El café ayuda un poco. No arregla la marea, pero calienta las manos.", 0.2f);
+            Block(taza);
+            built.Fridge = Bind(heladera, WorldAnchorIds.Fridge, "Abrir la heladera",
+                "Luz, un resto de comida, nada que arregle el día. Igual es algo concreto.", 0f);
+            built.DoorVisual = puerta != null ? puerta.transform : null;
+            built.Door = Bind(puerta, WorldAnchorIds.Door, "Mirar la puerta",
+                "Nadie. Solo la madera y tu alarma.", 0.12f);
+
+            var lamp = Prop("CeilingLamp", root, new Vector3(6.4f, 2.58f, 4.2f));
+            Piece("Cord", lamp.transform, new Vector3(0f, -0.12f, 0f), new Vector3(0.02f, 0.24f, 0.02f), palette.Dark);
+            Piece("Shade", lamp.transform, new Vector3(0f, -0.28f, 0f), new Vector3(0.42f, 0.14f, 0.42f), palette.Linen);
+
+            var sunGo = new GameObject("Sun");
+            sunGo.transform.SetParent(root, false);
+            sunGo.transform.localRotation = Quaternion.Euler(50f, -30f, 0f);
+            var sun = sunGo.AddComponent<Light>();
+            sun.type = LightType.Directional;
+            sun.color = new Color(1f, 0.96f, 0.9f);
+            sun.intensity = 1.55f;
+            sun.shadows = LightShadows.Soft;
+            built.Sun = sun;
+
+            var fillGo = new GameObject("FillLight");
+            fillGo.transform.SetParent(root, false);
+            fillGo.transform.localPosition = new Vector3(6.4f, 2.15f, 4.2f);
+            var fill = fillGo.AddComponent<Light>();
+            fill.type = LightType.Point;
+            fill.range = 14f;
+            fill.intensity = 2.6f;
+            fill.color = new Color(1f, 0.9f, 0.75f);
+
+            LogModel("Paredes", paredes);
+            LogModel("Cama", cama);
+            LogModel("Puerta", puerta);
+            LogModel("Celular", celular);
+
+            var bedCenter = CenterOf(cama);
+            var doorCenter = CenterOf(puerta);
+            if (bedCenter.x < 0f || bedCenter.x > 5f || bedCenter.z < 0f || bedCenter.z > 4f)
+                throw new InvalidOperationException($"La cama quedó en {bedCenter}, fuera del dormitorio.");
+            if (doorCenter.x < 8f || doorCenter.x > 13.5f || doorCenter.z < -0.6f || doorCenter.z > 2f)
+                throw new InvalidOperationException($"La puerta quedó en {doorCenter}, fuera del vano sur.");
+
+            return built;
+        }
+
+        static float ShellScale(GameObject paredes)
+        {
+            if (!TryBounds(paredes, out var bounds))
+                return 1f;
+
+            var max = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+            if (max > 80f)
+                return 0.01f;
+            if (max < 1.5f)
+                return 100f;
+            return 1f;
+        }
+
+        static void AlignToHouse(List<GameObject> placed, GameObject paredes)
+        {
+            if (!TryBounds(paredes, out var bounds))
+                return;
+
+            var flipX = bounds.center.x < 0f;
+            var flipZ = bounds.center.z < 0f;
+            if (!flipX && !flipZ)
+                return;
+
+            foreach (var go in placed)
+                Reflect(go, flipX, flipZ);
+
+            if (TryBounds(paredes, out bounds) && bounds.center.x >= 0f && bounds.center.z >= 0f)
+            {
+                Debug.Log("Apartment FBX: se acomodó el eje para coincidir con el departamento.");
+                return;
+            }
+
+            foreach (var go in placed)
+                Reflect(go, flipX, flipZ);
+
+            foreach (var go in placed)
+            {
+                var scale = go.transform.localScale;
+                if (flipX) scale.x = -Mathf.Abs(scale.x);
+                if (flipZ) scale.z = -Mathf.Abs(scale.z);
+                go.transform.localScale = scale;
+                MakeDoubleSided(go);
+            }
+
+            Debug.LogWarning("Apartment FBX: el modelado entró espejado y se corrigió con la escala.");
+        }
+
+        static void Reflect(GameObject go, bool flipX, bool flipZ)
+        {
+            if (go.transform.childCount == 0)
+            {
+                ReflectTransform(go.transform, flipX, flipZ);
+                return;
+            }
+
+            foreach (Transform child in go.transform)
+                ReflectTransform(child, flipX, flipZ);
+        }
+
+        static void ReflectTransform(Transform target, bool flipX, bool flipZ)
+        {
+            var position = target.localPosition;
+            if (flipX) position.x = -position.x;
+            if (flipZ) position.z = -position.z;
+            target.localPosition = position;
+
+            var rotation = target.localRotation;
+            if (flipX && flipZ)
+                target.localRotation = new Quaternion(-rotation.x, rotation.y, -rotation.z, rotation.w);
+            else if (flipZ)
+                target.localRotation = new Quaternion(rotation.x, -rotation.y, -rotation.z, rotation.w);
+            else if (flipX)
+                target.localRotation = new Quaternion(-rotation.x, rotation.y, -rotation.z, rotation.w);
+        }
+
+        static void MakeDoubleSided(GameObject go)
+        {
+            foreach (var renderer in go.GetComponentsInChildren<Renderer>(true))
+            {
+                foreach (var material in renderer.sharedMaterials)
+                {
+                    if (material != null && material.HasProperty("_Cull"))
+                        material.SetFloat("_Cull", 0f);
+                }
+            }
+        }
+
+        static void CollideShell(GameObject paredes)
+        {
+            foreach (var filter in paredes.GetComponentsInChildren<MeshFilter>(true))
+            {
+                if (filter.sharedMesh == null)
+                    continue;
+
+                var size = TransformBounds(filter.transform.localToWorldMatrix, filter.sharedMesh.bounds).size;
+                var flatFloor = size.y < 0.25f && size.y < size.x && size.y < size.z;
+                if (flatFloor)
+                {
+                    FitBox(filter.gameObject, 0f);
+                    continue;
+                }
+
+                var mesh = filter.gameObject.GetComponent<MeshCollider>();
+                if (mesh == null)
+                    mesh = filter.gameObject.AddComponent<MeshCollider>();
+                mesh.sharedMesh = filter.sharedMesh;
+                mesh.convex = false;
+            }
+        }
+
+        static Interactable Bind(GameObject go, string id, string prompt, string thought, float minWorld)
+        {
+            if (go == null)
+                return null;
+
+            FitBox(go, minWorld);
+            return MakeInteractable(go, id, prompt, thought);
+        }
+
+        static void Block(GameObject go)
+        {
+            if (go == null)
+                return;
+
+            FitBox(go, 0f);
+        }
+
+        static void FitBox(GameObject go, float minWorld)
+        {
+            if (!TryBounds(go, out var world))
+                return;
+
+            var box = go.GetComponent<BoxCollider>();
+            if (box == null)
+                box = go.AddComponent<BoxCollider>();
+
+            box.center = go.transform.InverseTransformPoint(world.center);
+            var lossy = go.transform.lossyScale;
+            box.size = new Vector3(
+                AxisSize(world.size.x, lossy.x, minWorld),
+                AxisSize(world.size.y, lossy.y, minWorld),
+                AxisSize(world.size.z, lossy.z, minWorld));
+        }
+
+        static float AxisSize(float worldSize, float scale, float minWorld)
+        {
+            var magnitude = Mathf.Max(0.0001f, Mathf.Abs(scale));
+            return Mathf.Max(worldSize, minWorld) / magnitude;
+        }
+
+        static bool TryBounds(GameObject go, out Bounds bounds)
+        {
+            bounds = default;
+            if (go == null)
+                return false;
+
+            var any = false;
+            foreach (var filter in go.GetComponentsInChildren<MeshFilter>(true))
+            {
+                if (filter.sharedMesh == null)
+                    continue;
+
+                var world = TransformBounds(filter.transform.localToWorldMatrix, filter.sharedMesh.bounds);
+                if (!any)
+                {
+                    bounds = world;
+                    any = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(world);
+                }
+            }
+
+            return any;
+        }
+
+        static Bounds TransformBounds(Matrix4x4 matrix, Bounds local)
+        {
+            var center = matrix.MultiplyPoint3x4(local.center);
+            var extents = local.extents;
+            var axisX = matrix.MultiplyVector(new Vector3(extents.x, 0f, 0f));
+            var axisY = matrix.MultiplyVector(new Vector3(0f, extents.y, 0f));
+            var axisZ = matrix.MultiplyVector(new Vector3(0f, 0f, extents.z));
+            var worldExtents = new Vector3(
+                Mathf.Abs(axisX.x) + Mathf.Abs(axisY.x) + Mathf.Abs(axisZ.x),
+                Mathf.Abs(axisX.y) + Mathf.Abs(axisY.y) + Mathf.Abs(axisZ.y),
+                Mathf.Abs(axisX.z) + Mathf.Abs(axisY.z) + Mathf.Abs(axisZ.z));
+            return new Bounds(center, worldExtents * 2f);
+        }
+
+        static Vector3 CenterOf(GameObject go)
+        {
+            return TryBounds(go, out var bounds) ? bounds.center : Vector3.zero;
+        }
+
+        static void LogModel(string label, GameObject go)
+        {
+            if (go == null)
+            {
+                Debug.LogWarning("Apartment FBX: falta " + label);
+                return;
+            }
+
+            var size = TryBounds(go, out var bounds) ? bounds.size : Vector3.zero;
+            Debug.Log($"Apartment FBX {label} centro={CenterOf(go):F2} tamaño={size:F2} root={go.transform.localPosition:F2} hijos={go.transform.childCount}");
         }
 
         static void Leg(Transform parent, Vector3 pos, Material mat)
