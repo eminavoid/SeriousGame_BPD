@@ -12,6 +12,9 @@ namespace SeriousGameBPD.World
         Camera _eye;
         HouseHud _hud;
         Interactable _current;
+        Collider _hitCollider;
+        Interactable _cachedOnCollider;
+        string _shownPrompt;
 
         public Interactable Current => _current;
 
@@ -25,21 +28,31 @@ namespace SeriousGameBPD.World
         {
             if (_eye == null || PlayerLock.IsLocked)
             {
-                _current = null;
-                _hud?.SetPrompt("");
+                SetCurrent(null);
                 return;
             }
 
-            _current = null;
-            var ray = new Ray(_eye.transform.position, _eye.transform.forward);
-            if (Physics.Raycast(ray, out var hit, _range, ~0, QueryTriggerInteraction.Collide))
+            Interactable next = null;
+            if (Physics.Raycast(_eye.transform.position, _eye.transform.forward, out var hit, _range, ~0, QueryTriggerInteraction.Collide))
             {
-                var interactable = hit.collider.GetComponentInParent<Interactable>();
-                if (interactable != null && interactable.CanInteract)
-                    _current = interactable;
+                if (hit.collider != _hitCollider)
+                {
+                    _hitCollider = hit.collider;
+                    _cachedOnCollider = hit.collider != null
+                        ? hit.collider.GetComponentInParent<Interactable>()
+                        : null;
+                }
+
+                if (_cachedOnCollider != null && _cachedOnCollider.CanInteract)
+                    next = _cachedOnCollider;
+            }
+            else if (_hitCollider != null)
+            {
+                _hitCollider = null;
+                _cachedOnCollider = null;
             }
 
-            _hud?.SetPrompt(_current != null ? $"E — {_current.Prompt}" : "");
+            SetCurrent(next);
 
             if (_current == null) return;
 
@@ -51,6 +64,17 @@ namespace SeriousGameBPD.World
 #endif
             if (pressed)
                 _current.TryInteract();
+        }
+
+        void SetCurrent(Interactable next)
+        {
+            string prompt = next != null ? next.Prompt : null;
+            if (next == _current && prompt == _shownPrompt)
+                return;
+
+            _current = next;
+            _shownPrompt = prompt;
+            _hud?.SetPrompt(next != null ? "E — " + prompt : "");
         }
     }
 }

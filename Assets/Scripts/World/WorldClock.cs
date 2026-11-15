@@ -13,6 +13,7 @@ namespace SeriousGameBPD.World
 
         public float Minutes { get; private set; } = StartMinutes;
         public bool Paused { get; set; }
+        int _publishedMinute = int.MinValue;
 
         public DayBlock Block => BlockAt(Minutes);
         public event Action Changed;
@@ -41,12 +42,20 @@ namespace SeriousGameBPD.World
         {
             if (Paused || PlayerLock.IsLocked) return;
             Minutes = Mathf.Min(EndMinutes, Minutes + _minutesPerRealSecond * Time.deltaTime);
-            Changed?.Invoke();
+            PublishIfMinuteChanged();
         }
 
         public void JumpTo(float minutes)
         {
             Minutes = Mathf.Clamp(minutes, StartMinutes, EndMinutes);
+            PublishIfMinuteChanged();
+        }
+
+        void PublishIfMinuteChanged()
+        {
+            int minute = Mathf.Clamp(Mathf.RoundToInt(Minutes), 0, 24 * 60 - 1);
+            if (minute == _publishedMinute) return;
+            _publishedMinute = minute;
             Changed?.Invoke();
         }
 
