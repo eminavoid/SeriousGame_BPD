@@ -20,6 +20,7 @@ namespace SeriousGameBPD.World
         readonly List<Beat> _beats = new List<Beat>();
         readonly HashSet<string> _done = new HashSet<string>();
         int _index = -1;
+        int _clockMinute = int.MinValue;
         float _wait;
         float _pendingTime;
         float _deferTick;
@@ -69,7 +70,12 @@ namespace SeriousGameBPD.World
             if (_dayEnded || _playing || PlayerLock.IsLocked) return;
             if (_ctx == null || _ctx.Clock == null) return;
 
-            _ctx.Hud?.SetClock(_ctx.Clock.DisplayBlock, _ctx.Clock.DisplayTime);
+            int minute = Mathf.Clamp(Mathf.RoundToInt(_ctx.Clock.Minutes), 0, 24 * 60 - 1);
+            if (minute != _clockMinute)
+            {
+                _clockMinute = minute;
+                _ctx.Hud?.SetClock(_ctx.Clock.DisplayBlock, _ctx.Clock.DisplayTime);
+            }
 
             if (_active == null) return;
 

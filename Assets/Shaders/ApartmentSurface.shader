@@ -123,26 +123,50 @@ Shader "Apartment/Surface"
             {
                 float2 dx, dy;
                 StableGrad(uv, dx, dy);
+                return SampleAlbedoGrad(uv, dx, dy);
+            }
+
+            half3 SampleAlbedoGrad(float2 uv, float2 dx, float2 dy)
+            {
                 return SAMPLE_TEXTURE2D_GRAD(_BaseMap, sampler_BaseMap, uv, dx, dy).rgb;
             }
 
-            half3 SampleTangent(float2 uv)
+            half3 SampleTangentGrad(float2 uv, float2 dx, float2 dy)
             {
-                float2 dx, dy;
-                StableGrad(uv, dx, dy);
                 half4 packed = SAMPLE_TEXTURE2D_GRAD(_BumpMap, sampler_BumpMap, uv, dx, dy);
                 return UnpackNormalScale(packed, _BumpScale);
             }
 
+            // Un peso en cero no aporta. El derivativo se calcula siempre, afuera del if,
+            // para no volver a dibujar la línea entre triángulos.
             float3 TriplanarNormal(float3 posWS, float3 n, float3 blend)
             {
-                float3 tx = SampleTangent(posWS.zy * _Tile);
-                float3 ty = SampleTangent(posWS.xz * _Tile);
-                float3 tz = SampleTangent(posWS.xy * _Tile);
+                float2 uvX = posWS.zy * _Tile;
+                float2 uvY = posWS.xz * _Tile;
+                float2 uvZ = posWS.xy * _Tile;
+                float2 dxX, dyX, dxY, dyY, dxZ, dyZ;
+                StableGrad(uvX, dxX, dyX);
+                StableGrad(uvY, dxY, dyY);
+                StableGrad(uvZ, dxZ, dyZ);
 
-                tx = float3(tx.xy + n.zy, abs(tx.z) * n.x);
-                ty = float3(ty.xy + n.xz, abs(ty.z) * n.y);
-                tz = float3(tz.xy + n.xy, abs(tz.z) * n.z);
+                float3 tx = 0;
+                float3 ty = 0;
+                float3 tz = 0;
+                [branch] if (blend.x > 0)
+                {
+                    float3 t = SampleTangentGrad(uvX, dxX, dyX);
+                    tx = float3(t.xy + n.zy, abs(t.z) * n.x);
+                }
+                [branch] if (blend.y > 0)
+                {
+                    float3 t = SampleTangentGrad(uvY, dxY, dyY);
+                    ty = float3(t.xy + n.xz, abs(t.z) * n.y);
+                }
+                [branch] if (blend.z > 0)
+                {
+                    float3 t = SampleTangentGrad(uvZ, dxZ, dyZ);
+                    tz = float3(t.xy + n.xy, abs(t.z) * n.z);
+                }
                 return normalize(tx.zyx * blend.x + ty.xzy * blend.y + tz.xyz * blend.z);
             }
 
@@ -177,7 +201,14 @@ Shader "Apartment/Surface"
                     float2 uvX = input.positionWS.zy * _Tile;
                     float2 uvY = input.positionWS.xz * _Tile;
                     float2 uvZ = input.positionWS.xy * _Tile;
-                    half3 tex = SampleAlbedo(uvX) * blend.x + SampleAlbedo(uvY) * blend.y + SampleAlbedo(uvZ) * blend.z;
+                    float2 dxX, dyX, dxY, dyY, dxZ, dyZ;
+                    StableGrad(uvX, dxX, dyX);
+                    StableGrad(uvY, dxY, dyY);
+                    StableGrad(uvZ, dxZ, dyZ);
+                    half3 tex = 0;
+                    [branch] if (blend.x > 0) tex += (half3)(SampleAlbedoGrad(uvX, dxX, dyX) * blend.x);
+                    [branch] if (blend.y > 0) tex += (half3)(SampleAlbedoGrad(uvY, dxY, dyY) * blend.y);
+                    [branch] if (blend.z > 0) tex += (half3)(SampleAlbedoGrad(uvZ, dxZ, dyZ) * blend.z);
                     half broad = dot(SampleAlbedo(uvY * 0.27), half3(0.3, 0.5, 0.2));
                     tex *= lerp(1.0, broad * 1.15, _Macro);
                     albedo = tex * _BaseColor.rgb;

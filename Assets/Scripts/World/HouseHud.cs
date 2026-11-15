@@ -26,6 +26,10 @@ namespace SeriousGameBPD.World
         Action _onDayComplete;
         float _skillCooldown;
         const float SkillCooldownSeconds = 50f;
+        bool _hintCooling;
+        int _hintSecond = int.MinValue;
+        string _clockBlock;
+        string _clockTime;
 
         public EventRunner Events => _events;
         public PhoneChatUI PhoneChat => _phoneChat;
@@ -75,8 +79,11 @@ namespace SeriousGameBPD.World
 
         public void SetClock(string block, string time)
         {
-            if (_clock != null)
-                _clock.text = $"{block}  {time}";
+            if (_clock == null) return;
+            if (block == _clockBlock && time == _clockTime) return;
+            _clockBlock = block;
+            _clockTime = time;
+            _clock.text = block + "  " + time;
         }
 
         public void CompleteDay()
@@ -91,9 +98,16 @@ namespace SeriousGameBPD.World
         {
             if (_skillsHint != null)
             {
-                _skillsHint.text = _skillCooldown > 0f
-                    ? $"Herramientas en cooldown ({_skillCooldown:0}s) — 1 STOP · 2 TIPP · 3 Acción opuesta"
-                    : "Herramientas: 1 STOP · 2 TIPP · 3 Acción opuesta  (libres, con cooldown)";
+                bool cooling = _skillCooldown > 0f;
+                int second = cooling ? Mathf.RoundToInt(_skillCooldown) : 0;
+                if (cooling != _hintCooling || second != _hintSecond)
+                {
+                    _hintCooling = cooling;
+                    _hintSecond = second;
+                    _skillsHint.text = cooling
+                        ? "Herramientas en cooldown (" + second + "s) — 1 STOP · 2 TIPP · 3 Acción opuesta"
+                        : "Herramientas: 1 STOP · 2 TIPP · 3 Acción opuesta  (libres, con cooldown)";
+                }
             }
 
             if (_skillCooldown > 0f)

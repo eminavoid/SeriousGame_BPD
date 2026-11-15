@@ -71,6 +71,7 @@ namespace SeriousGameBPD.World
 
         void BuildWorld()
         {
+            ApartmentShaderWarmup.Warm();
             var existingCam = Camera.main;
             foreach (var cam in FindObjectsByType<Camera>(FindObjectsSortMode.None))
             {
