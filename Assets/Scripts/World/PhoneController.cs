@@ -15,6 +15,10 @@ namespace SeriousGameBPD.World
         float _buzzTimer;
         DayEvent _pending;
         AudioClip _buzzClip;
+        MeshRenderer _renderer;
+        MaterialPropertyBlock _block;
+
+        static readonly int NotifyId = Shader.PropertyToID("_Notify");
 
         public Interactable Interactable => _interactable;
         public bool IsBuzzing => _buzzing;
@@ -31,6 +35,7 @@ namespace SeriousGameBPD.World
             _audio.maxDistance = 8f;
             _buzzClip = ProceduralAudio.Beep(180f, 0.18f, 0.4f);
             _audio.clip = _buzzClip;
+            SetNotify(0f);
         }
 
         public void StartBuzzing(DayEvent evt)
@@ -39,6 +44,7 @@ namespace SeriousGameBPD.World
             _buzzing = true;
             if (_interactable != null)
                 _interactable.Prompt = "Atender el celular (vibra)";
+            SetNotify(1f);
         }
 
         public void StopBuzzing()
@@ -48,7 +54,29 @@ namespace SeriousGameBPD.World
             transform.localPosition = _rest;
             if (_interactable != null)
                 _interactable.Prompt = "Mirar el celular";
+            SetNotify(0f);
             StopRumble();
+        }
+
+        void SetNotify(float value)
+        {
+            if (_renderer == null)
+                _renderer = GetComponent<MeshRenderer>();
+            if (_renderer == null)
+                return;
+            if (_block == null)
+                _block = new MaterialPropertyBlock();
+
+            var mats = _renderer.sharedMaterials;
+            for (var i = 0; i < mats.Length; i++)
+            {
+                var mat = mats[i];
+                if (mat == null || !mat.HasProperty(NotifyId))
+                    continue;
+                _renderer.GetPropertyBlock(_block, i);
+                _block.SetFloat(NotifyId, value);
+                _renderer.SetPropertyBlock(_block, i);
+            }
         }
 
         void Update()
