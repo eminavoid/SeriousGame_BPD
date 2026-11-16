@@ -16,9 +16,10 @@ namespace SeriousGameBPD.World
             var bar = new GameObject("Thought", typeof(RectTransform));
             var barRt = bar.GetComponent<RectTransform>();
             barRt.SetParent(parent, false);
-            barRt.anchorMin = barRt.anchorMax = new Vector2(0.5f, 0.26f);
-            barRt.pivot = new Vector2(0.5f, 0.5f);
-            barRt.sizeDelta = new Vector2(1080f, 210f);
+            barRt.anchorMin = barRt.anchorMax = new Vector2(0.5f, 0f);
+            barRt.pivot = new Vector2(0.5f, 0f);
+            barRt.anchoredPosition = new Vector2(0f, 8f);
+            barRt.sizeDelta = new Vector2(720f, 118f);
 
             _group = bar.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
@@ -32,7 +33,7 @@ namespace SeriousGameBPD.World
             photoRt.anchorMax = new Vector2(0f, 0.5f);
             photoRt.pivot = new Vector2(0f, 0.5f);
             photoRt.anchoredPosition = Vector2.zero;
-            photoRt.sizeDelta = new Vector2(200f, 198f);
+            photoRt.sizeDelta = new Vector2(110f, 108f);
             var photo = photoGo.GetComponent<Image>();
             photo.raycastTarget = false;
             UiArt.Apply(photo, UiArt.ThoughtPhoto, false);
@@ -42,17 +43,17 @@ namespace SeriousGameBPD.World
             plateRt.SetParent(barRt, false);
             plateRt.anchorMin = Vector2.zero;
             plateRt.anchorMax = Vector2.one;
-            plateRt.offsetMin = new Vector2(214f, 10f);
-            plateRt.offsetMax = new Vector2(0f, -10f);
+            plateRt.offsetMin = new Vector2(118f, 6f);
+            plateRt.offsetMax = new Vector2(0f, -6f);
             var plate = plateGo.GetComponent<Image>();
             plate.raycastTarget = false;
             UiArt.Apply(plate, UiArt.ThoughtPlate, true);
 
-            _text = UITheme.Text(plateRt, "Line", "", 24, UiArt.Ink, TextAnchor.MiddleCenter, FontStyle.Italic);
+            _text = UITheme.Text(plateRt, "Line", "", 20, UiArt.Ink, TextAnchor.MiddleCenter, FontStyle.Italic);
             _text.resizeTextForBestFit = true;
-            _text.resizeTextMinSize = 16;
-            _text.resizeTextMaxSize = 24;
-            UITheme.Stretch(_text.rectTransform, Vector2.zero, Vector2.one, new Vector2(36f, 16f), new Vector2(-28f, -16f));
+            _text.resizeTextMinSize = 14;
+            _text.resizeTextMaxSize = 20;
+            UITheme.Stretch(_text.rectTransform, Vector2.zero, Vector2.one, new Vector2(22f, 8f), new Vector2(-18f, -8f));
         }
 
         public void Show(string line, float hold = 3.4f)
