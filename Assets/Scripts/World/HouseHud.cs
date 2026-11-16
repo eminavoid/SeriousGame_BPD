@@ -69,6 +69,10 @@ namespace SeriousGameBPD.World
 
             _phoneChat = parent.gameObject.AddComponent<PhoneChatUI>();
             _phoneChat.Build(parent, skills);
+
+            var pauseGo = new GameObject("PauseMenu", typeof(RectTransform));
+            pauseGo.transform.SetParent(parent, false);
+            pauseGo.AddComponent<PauseMenu>().Build(parent);
         }
 
         public void SetPrompt(string text)
@@ -105,8 +109,8 @@ namespace SeriousGameBPD.World
                     _hintCooling = cooling;
                     _hintSecond = second;
                     _skillsHint.text = cooling
-                        ? "Herramientas en cooldown (" + second + "s) — 1 STOP · 2 TIPP · 3 Acción opuesta"
-                        : "Herramientas: 1 STOP · 2 TIPP · 3 Acción opuesta  (libres, con cooldown)";
+                        ? "Herramientas en cooldown (" + second + "s) — 1 STOP · 2 TIPP · 3 Acción opuesta    Esc pausa"
+                        : "Herramientas: 1 STOP · 2 TIPP · 3 Acción opuesta    Esc pausa";
                 }
             }
 
