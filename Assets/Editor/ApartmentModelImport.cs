@@ -35,10 +35,34 @@ namespace SeriousGameBPD.EditorTools
                 return null;
 
             var key = Clean(material.name);
+            var door = DoorMaterial(key);
+            if (door != null)
+                return door;
+
             var styled = ApartmentVisuals.GetSharedMaterial(key);
             if (styled == null)
                 Debug.LogWarning("Apartment FBX: material sin tabla " + material.name + " en " + assetPath);
             return styled;
+        }
+
+        Material DoorMaterial(string key)
+        {
+            var path = assetPath.Replace('\\', '/');
+            if (!path.EndsWith("/Puerta.fbx"))
+                return null;
+
+            string asset = null;
+            if (key == "M_Madera_Oscura")
+                asset = "Assets/Materials/Apartment/Fbx/M_Puerta_Marco.mat";
+            else if (key == "M_Madera")
+                asset = "Assets/Materials/Apartment/Fbx/M_Puerta_Hoja.mat";
+            if (asset == null)
+                return null;
+
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(asset);
+            if (mat == null)
+                Debug.LogWarning("Apartment FBX: falta " + asset);
+            return mat;
         }
 
         static string Clean(string name)
