@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace SeriousGameBPD.World
 {
     /// <summary>
-    /// Menú chico con Esc: continuar o volver al inicio.
+    /// Menú chico con Esc: continuar, volver al inicio o salir del juego.
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
@@ -28,14 +28,24 @@ namespace SeriousGameBPD.World
             root.SetParent(parent, false);
             UITheme.Stretch(root, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-            var card = MenuChrome.Card(root, "Screen", 680f, 620f);
+            // Se amplía la altura a 720f para acomodar los 3 botones principales
+            var card = MenuChrome.Card(root, "Screen", 680f, 720f);
             _screen = card.parent.gameObject;
 
             MenuChrome.Title(card, "Pausa");
-            MenuChrome.Gap(card, 28f);
+            MenuChrome.Gap(card, 24f);
+
+            // Botón 1: Continuar
             MenuChrome.Pill(card, "Continuar", Close, true);
-            MenuChrome.Gap(card, 18f);
-            MenuChrome.Pill(card, "Salir al inicio", Leave, false);
+            MenuChrome.Gap(card, 14f);
+
+            // Botón 2: Salir al inicio (primary: true para mismo tamaño 460x110 y negrita)
+            MenuChrome.Pill(card, "Salir al inicio", Leave, true);
+            MenuChrome.Gap(card, 14f);
+
+            // Botón 3: Salir del juego (primary: true para consistencia)
+            MenuChrome.Pill(card, "Salir del juego", QuitGame, true);
+
             MenuChrome.Flex(card);
             MenuChrome.Hint(card, "Esc también vuelve al juego");
 
@@ -99,6 +109,15 @@ namespace SeriousGameBPD.World
                 PlayerLock.Reset();
                 SceneFlow.LoadBoot();
             }
+        }
+
+        void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
 
         void OnDestroy()
