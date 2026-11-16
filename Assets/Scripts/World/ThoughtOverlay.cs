@@ -13,16 +13,46 @@ namespace SeriousGameBPD.World
 
         public void Build(Transform parent)
         {
-            var panel = UITheme.Panel(parent, "Thought",
-                new Vector2(0.18f, 0.22f), new Vector2(0.82f, 0.38f),
-                Vector2.zero, Vector2.zero, new Color(0.08f, 0.09f, 0.12f, 0.0f));
-            _group = panel.gameObject.AddComponent<CanvasGroup>();
+            var bar = new GameObject("Thought", typeof(RectTransform));
+            var barRt = bar.GetComponent<RectTransform>();
+            barRt.SetParent(parent, false);
+            barRt.anchorMin = barRt.anchorMax = new Vector2(0.5f, 0.26f);
+            barRt.pivot = new Vector2(0.5f, 0.5f);
+            barRt.sizeDelta = new Vector2(1080f, 210f);
+
+            _group = bar.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
             _group.blocksRaycasts = false;
             _group.interactable = false;
 
-            _text = UITheme.Text(panel, "Line", "", 26, UITheme.TextPrimary, TextAnchor.MiddleCenter, FontStyle.Italic);
-            UITheme.Stretch(_text.rectTransform, new Vector2(0.04f, 0.1f), new Vector2(0.96f, 0.9f), Vector2.zero, Vector2.zero);
+            var photoGo = new GameObject("Portrait", typeof(RectTransform), typeof(Image));
+            var photoRt = photoGo.GetComponent<RectTransform>();
+            photoRt.SetParent(barRt, false);
+            photoRt.anchorMin = new Vector2(0f, 0.5f);
+            photoRt.anchorMax = new Vector2(0f, 0.5f);
+            photoRt.pivot = new Vector2(0f, 0.5f);
+            photoRt.anchoredPosition = Vector2.zero;
+            photoRt.sizeDelta = new Vector2(200f, 198f);
+            var photo = photoGo.GetComponent<Image>();
+            photo.raycastTarget = false;
+            UiArt.Apply(photo, UiArt.ThoughtPhoto, false);
+
+            var plateGo = new GameObject("Plate", typeof(RectTransform), typeof(Image));
+            var plateRt = plateGo.GetComponent<RectTransform>();
+            plateRt.SetParent(barRt, false);
+            plateRt.anchorMin = Vector2.zero;
+            plateRt.anchorMax = Vector2.one;
+            plateRt.offsetMin = new Vector2(214f, 10f);
+            plateRt.offsetMax = new Vector2(0f, -10f);
+            var plate = plateGo.GetComponent<Image>();
+            plate.raycastTarget = false;
+            UiArt.Apply(plate, UiArt.ThoughtPlate, true);
+
+            _text = UITheme.Text(plateRt, "Line", "", 24, UiArt.Ink, TextAnchor.MiddleCenter, FontStyle.Italic);
+            _text.resizeTextForBestFit = true;
+            _text.resizeTextMinSize = 16;
+            _text.resizeTextMaxSize = 24;
+            UITheme.Stretch(_text.rectTransform, Vector2.zero, Vector2.one, new Vector2(36f, 16f), new Vector2(-28f, -16f));
         }
 
         public void Show(string line, float hold = 3.4f)
