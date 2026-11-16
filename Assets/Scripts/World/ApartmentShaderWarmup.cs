@@ -14,6 +14,7 @@ namespace SeriousGameBPD.World
         static readonly string[] LitShaders =
         {
             "Apartment/Surface",
+            "Apartment/Fridge",
             "Apartment/Glass",
             "Apartment/Clear",
             "Apartment/Mirror",
