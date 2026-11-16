@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Heladera
+  m_Shader: {fileID: 4800000, guid: a7c3e91f4b2d48e6a1f0c5d8b9e3a472, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 6f1d8c2a9b4e4f07a3c5d7e1b8a04619, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 8e2b4d6c0a1f4e93b5d7c9a2f4e61830, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DoorBump:
+        m_Texture: {fileID: 2800000, guid: 5d1c8a3e7b0f4d29a6c2e4b8f0a17365, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DoorMap:
+        m_Texture: {fileID: 2800000, guid: 3c9a7e5b1d8f4a62b0e4c6d8a2f51973, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Blend: 8
+    - _BumpScale: 0.4
+    - _Macro: 0.05
+    - _Metallic: 0
+    - _Smoothness: 0.46
+    - _Tile: 2.2
+    - _UseDoor: 1
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GasketColor: {r: 0.16, g: 0.155, b: 0.15, a: 1}
+    - _SpecColor: {r: 0.055, g: 0.054, b: 0.05, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

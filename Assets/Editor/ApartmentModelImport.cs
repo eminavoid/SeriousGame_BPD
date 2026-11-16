@@ -43,6 +43,10 @@ namespace SeriousGameBPD.EditorTools
             if (basin != null)
                 return basin;
 
+            var fridge = FridgeMaterial(key);
+            if (fridge != null)
+                return fridge;
+
             var styled = ApartmentVisuals.GetSharedMaterial(key);
             if (styled == null)
                 Debug.LogWarning("Apartment FBX: material sin tabla " + material.name + " en " + assetPath);
@@ -80,6 +84,23 @@ namespace SeriousGameBPD.EditorTools
             if (mat == null)
                 Debug.LogWarning("Apartment FBX: falta " + asset);
             return mat;
+        }
+
+        Material FridgeMaterial(string key)
+        {
+            var path = assetPath.Replace('\\', '/');
+            if (!path.EndsWith("/Heladera.fbx"))
+                return null;
+
+            string dedicated = null;
+            if (key == "M_Plastico_Negro")
+                dedicated = "M_Heladera_Manija";
+            else if (key == "M_Metal_Gastado")
+                dedicated = "M_Heladera";
+            if (dedicated == null)
+                return null;
+
+            return AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Apartment/Fbx/" + dedicated + ".mat");
         }
 
         static string Clean(string name)
