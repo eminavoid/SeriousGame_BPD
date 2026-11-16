@@ -39,6 +39,10 @@ namespace SeriousGameBPD.EditorTools
             if (door != null)
                 return door;
 
+            var basin = BasinMaterial(key);
+            if (basin != null)
+                return basin;
+
             var styled = ApartmentVisuals.GetSharedMaterial(key);
             if (styled == null)
                 Debug.LogWarning("Apartment FBX: material sin tabla " + material.name + " en " + assetPath);
@@ -59,6 +63,19 @@ namespace SeriousGameBPD.EditorTools
             if (asset == null)
                 return null;
 
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(asset);
+            if (mat == null)
+                Debug.LogWarning("Apartment FBX: falta " + asset);
+            return mat;
+        }
+
+        Material BasinMaterial(string key)
+        {
+            var path = assetPath.Replace('\\', '/');
+            if (!path.EndsWith("/Lavamanos.fbx") || key != "M_Ceramica_Blanca")
+                return null;
+
+            const string asset = "Assets/Materials/Apartment/Fbx/M_Ceramica_Bacha.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(asset);
             if (mat == null)
                 Debug.LogWarning("Apartment FBX: falta " + asset);
