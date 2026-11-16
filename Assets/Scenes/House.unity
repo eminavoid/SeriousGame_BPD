@@ -3368,9 +3368,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3726297075174199483, guid: a60f8d6d0e88f4e42958e3df6354d7e2, type: 3}
+      propertyPath: IdleThought
+      value: "El caf\xE9 ayuda un poco. No arregla la marea de emocione, pero calienta
+        las manos."
+      objectReference: {fileID: 0}
     - target: {fileID: 5165270282445629935, guid: a60f8d6d0e88f4e42958e3df6354d7e2, type: 3}
       propertyPath: m_Name
       value: Apartment
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728382230632518932, guid: a60f8d6d0e88f4e42958e3df6354d7e2, type: 3}
+      propertyPath: IdleThought
+      value: El trabajo puede esperar un poco.
       objectReference: {fileID: 0}
     - target: {fileID: 7990599991341473365, guid: a60f8d6d0e88f4e42958e3df6354d7e2, type: 3}
       propertyPath: m_LocalScale.x
