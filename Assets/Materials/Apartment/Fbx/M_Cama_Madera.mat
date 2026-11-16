@@ -101,7 +101,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HardNormals: 0.9
-    - _Macro: 0.16
+    - _Macro: 0.08
     - _Mapping: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
