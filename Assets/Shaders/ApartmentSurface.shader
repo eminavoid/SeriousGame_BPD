@@ -119,16 +119,16 @@ Shader "Apartment/Surface"
                 dy *= scale;
             }
 
+            half3 SampleAlbedoGrad(float2 uv, float2 dx, float2 dy)
+            {
+                return SAMPLE_TEXTURE2D_GRAD(_BaseMap, sampler_BaseMap, uv, dx, dy).rgb;
+            }
+
             half3 SampleAlbedo(float2 uv)
             {
                 float2 dx, dy;
                 StableGrad(uv, dx, dy);
                 return SampleAlbedoGrad(uv, dx, dy);
-            }
-
-            half3 SampleAlbedoGrad(float2 uv, float2 dx, float2 dy)
-            {
-                return SAMPLE_TEXTURE2D_GRAD(_BaseMap, sampler_BaseMap, uv, dx, dy).rgb;
             }
 
             half3 SampleTangentGrad(float2 uv, float2 dx, float2 dy)
