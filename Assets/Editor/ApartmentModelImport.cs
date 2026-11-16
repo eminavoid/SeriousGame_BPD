@@ -47,6 +47,9 @@ namespace SeriousGameBPD.EditorTools
             if (fridge != null)
                 return fridge;
 
+            if (IsNotebook(key))
+                return NotebookMaterial(key);
+
             var styled = ApartmentVisuals.GetSharedMaterial(key);
             if (styled == null)
                 Debug.LogWarning("Apartment FBX: material sin tabla " + material.name + " en " + assetPath);
@@ -101,6 +104,21 @@ namespace SeriousGameBPD.EditorTools
                 return null;
 
             return AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Apartment/Fbx/" + dedicated + ".mat");
+        }
+
+        bool IsNotebook(string key)
+        {
+            var path = assetPath.Replace('\\', '/');
+            return path.EndsWith("/Notebook.fbx") && key.StartsWith("M_Notebook_");
+        }
+
+        Material NotebookMaterial(string key)
+        {
+            var asset = "Assets/Materials/Apartment/Fbx/" + key + ".mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(asset);
+            if (mat == null)
+                Debug.LogWarning("Apartment FBX: falta " + asset);
+            return mat;
         }
 
         static string Clean(string name)
