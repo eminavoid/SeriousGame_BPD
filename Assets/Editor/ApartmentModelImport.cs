@@ -50,6 +50,10 @@ namespace SeriousGameBPD.EditorTools
             if (IsNotebook(key))
                 return NotebookMaterial(key);
 
+            var furniture = FurnitureMaterial(key);
+            if (furniture != null)
+                return furniture;
+
             var styled = ApartmentVisuals.GetSharedMaterial(key);
             if (styled == null)
                 Debug.LogWarning("Apartment FBX: material sin tabla " + material.name + " en " + assetPath);
@@ -104,6 +108,36 @@ namespace SeriousGameBPD.EditorTools
                 return null;
 
             return AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Apartment/Fbx/" + dedicated + ".mat");
+        }
+
+        Material FurnitureMaterial(string key)
+        {
+            var path = assetPath.Replace('\\', '/');
+            string asset = null;
+            if (path.EndsWith("/Cama.fbx") && key == "M_Madera")
+                asset = "M_Cama_Madera";
+            else if (path.EndsWith("/MesaDeLuz.fbx") && key == "M_Madera")
+                asset = "M_MesaDeLuz_Tapa";
+            else if (path.EndsWith("/MesaDeLuz.fbx") && key == "M_Madera_Oscura")
+                asset = "M_MesaDeLuz_Cuerpo";
+            else if (path.EndsWith("/Comoda.fbx") && key == "M_Madera_Oscura")
+                asset = "M_Comoda_Cuerpo";
+            else if (path.EndsWith("/Comoda.fbx") && key == "M_Madera")
+                asset = "M_Comoda_Tapa";
+            else if (path.EndsWith("/Sillon.fbx") && key == "M_Madera_Oscura")
+                asset = "M_Sillon_Madera";
+            else if (path.EndsWith("/Mesada.fbx") && key == "M_Madera_Oscura")
+                asset = "M_Mesada_Bajo";
+            else if (path.EndsWith("/Mesa.fbx") && key == "M_Madera")
+                asset = "M_Mesa";
+
+            if (asset == null)
+                return null;
+
+            var mat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Apartment/Fbx/" + asset + ".mat");
+            if (mat == null)
+                Debug.LogWarning("Apartment FBX: falta " + asset + " para " + key + " en " + assetPath);
+            return mat;
         }
 
         bool IsNotebook(string key)
