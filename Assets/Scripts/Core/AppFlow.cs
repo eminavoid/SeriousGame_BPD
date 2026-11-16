@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 namespace SeriousGameBPD.Core
 {
     /// <summary>
-    /// Persistent flow: Boot warning -> House (3D day) -> Debrief.
+    /// Persistent flow: start menu -> content warning -> House (3D day) -> Debrief.
     /// </summary>
     public class AppFlow : MonoBehaviour
     {
@@ -101,6 +101,13 @@ namespace SeriousGameBPD.Core
                 return;
             }
 
+            ClearRoot();
+            var menu = _root.gameObject.AddComponent<StartMenu>();
+            menu.Build(_root, ShowWarning);
+        }
+
+        void ShowWarning()
+        {
             ClearRoot();
             var warning = _root.gameObject.AddComponent<ContentWarningUI>();
             warning.Build(_root, OnAccepted);
@@ -198,7 +205,7 @@ namespace SeriousGameBPD.Core
             foreach (var behaviour in toRemove)
             {
                 if (behaviour == null) continue;
-                if (behaviour is ContentWarningUI || behaviour is DayController || behaviour is DebriefController || behaviour is HouseHud
+                if (behaviour is StartMenu || behaviour is ContentWarningUI || behaviour is DayController || behaviour is DebriefController || behaviour is HouseHud
                     || behaviour is EventRunner || behaviour is PhoneChatUI || behaviour is ThoughtOverlay || behaviour is Affect.AffectMeterUI)
                     Destroy(behaviour);
             }
