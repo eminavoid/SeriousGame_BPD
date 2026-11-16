@@ -83,11 +83,18 @@ namespace SeriousGameBPD.EditorTools
         Material BasinMaterial(string key)
         {
             var path = assetPath.Replace('\\', '/');
-            if (!path.EndsWith("/Lavamanos.fbx") || key != "M_Ceramica_Blanca")
+            if (!path.EndsWith("/Lavamanos.fbx"))
                 return null;
 
-            const string asset = "Assets/Materials/Apartment/Fbx/M_Ceramica_Bacha.mat";
-            var mat = AssetDatabase.LoadAssetAtPath<Material>(asset);
+            string asset = null;
+            if (key == "M_Ceramica_Blanca")
+                asset = "M_Ceramica_Bacha";
+            else if (key == "M_Madera" || key == "M_Madera_Oscura")
+                asset = "M_Bacha_Base";
+            if (asset == null)
+                return null;
+
+            var mat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Apartment/Fbx/" + asset + ".mat");
             if (mat == null)
                 Debug.LogWarning("Apartment FBX: falta " + asset);
             return mat;
